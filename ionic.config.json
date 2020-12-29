@@ -1,0 +1,7 @@
+{
+  "name": "www.laguialinux.es",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
