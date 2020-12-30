@@ -1,10 +1,6 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-title>Blank</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <main-menu></main-menu>
     
     <ion-content>
       <ion-list>
@@ -20,6 +16,30 @@
         </ion-item>
       </ion-list>
 
+      <ion-row>
+        <ion-col>
+          <ion-button @click="MainMenu.openCustom();">
+            BTN-1
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button ion-button menuToggle="custom">Toggle Right Menu</ion-button>
+          <button ion-button menuToggle>Toggle Menu</button>
+          
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-menu-button menuToggle="main-menu"></ion-menu-button>
+            </ion-buttons>
+            <ion-title>
+              3333
+            </ion-title>
+          </ion-toolbar>
+        </ion-col>
+      </ion-row>
+
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button @click="() => router.push('/new')">
           <ion-icon :icon="add"></ion-icon>
@@ -30,10 +50,12 @@
 </template>
 
 <script lang="ts">
-import { IonFab, IonFabButton, IonIcon, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonFab, IonFabButton, IonIcon, IonContent, IonPage} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
+
+import MainMenu from '@/components/MainMenu.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -41,11 +63,9 @@ export default defineComponent({
     IonContent,
     IonFab,
     IonFabButton,
-    IonHeader,
     IonIcon,
     IonPage,
-    IonTitle,
-    IonToolbar
+    MainMenu,
   },
   setup() {
     return {
