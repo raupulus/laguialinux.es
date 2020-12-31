@@ -1,6 +1,6 @@
 <template>
   <ion-header>
-    <ion-navbar>
+    <ion-toolbar color="primary">
       <ion-row class="ion-hide-sm-up">
         <ion-col>
           <ion-buttons>
@@ -148,7 +148,7 @@
           
         </ion-col>
       </ion-row>
-    </ion-navbar>
+    </ion-toolbar>
   </ion-header>
 </template>
 <style scoped>

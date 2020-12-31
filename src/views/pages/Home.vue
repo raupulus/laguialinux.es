@@ -1,8 +1,7 @@
 <template>
-  
     <navbar></navbar>
     
-    <ion-content>
+    <ion-content color="dark">
       <ion-row class="center">
         <ion-col 
           size-sm="12"
