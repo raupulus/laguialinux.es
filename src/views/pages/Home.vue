@@ -1,6 +1,5 @@
 <template>
-  <ion-page>
-    <main-menu></main-menu>
+  
     <navbar></navbar>
     
     <ion-content>
@@ -127,24 +126,20 @@
 
       
     </ion-content>
-  </ion-page>
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardContent, IonCardSubtitle, IonSlides, IonSlide, IonContent, IonPage} from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardSubtitle, IonSlides, IonSlide, IonContent} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 
-import MainMenu from '@/components/MainMenu.vue';
 import Navbar from '@/components/layouts/Navbar.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
     IonContent,
-    IonPage,
-    MainMenu,
     Navbar,
     IonSlides, 
     IonSlide,

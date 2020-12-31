@@ -9,10 +9,15 @@
     <ion-content>
       <ion-list>
         <ion-item>Inicio</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Preferencias</ion-item>
+        <ion-item>Publicaciones</ion-item>
+        <ion-item>Noticias</ion-item>
+        <ion-item>Apps</ion-item>
+        <ion-item>Contacto</ion-item>
+        <ion-item>Videotutoriales</ion-item>
+        <ion-item>Distribuciones</ion-item>
+        <ion-item>Juegos</ion-item>
+        <ion-item>Enlaces Amigos</ion-item>
+        <ion-item>About</ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>

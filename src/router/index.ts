@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue';
-import NewItem from '@/views/NewItem.vue';
+import Home from '../views/pages/Home.vue';
+import NewItem from '@/views/pages/NewItem.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {

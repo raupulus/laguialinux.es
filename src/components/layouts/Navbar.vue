@@ -10,6 +10,7 @@
 
         <ion-col>
           <ion-title>
+            <ion-back-button default-href="/home"></ion-back-button>
             (logo)
           </ion-title>
         </ion-col>
@@ -21,6 +22,7 @@
 
       <ion-row class="ion-hide-sm-down">
         <ion-col>
+          <ion-back-button default-href="/home"></ion-back-button>
           <ion-title>
             (logo) La Guía Linux
           </ion-title>
@@ -157,7 +159,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { IonButton, IonPopover } from '@ionic/vue';
+import { IonButton, IonPopover, IonBackButton } from '@ionic/vue';
 
 export default defineComponent({
   name: 'NavBar',
