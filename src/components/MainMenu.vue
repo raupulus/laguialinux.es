@@ -3,16 +3,16 @@
     menu-id="main-menu" class="main-menu" content-id="main-menu">
     <ion-header>
       <ion-toolbar color="tertiary">
-        <ion-title>Menú Secundario Izquierdo</ion-title>
+        <ion-title>(Logo) La Guía Linux</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
+        <ion-item>Inicio</ion-item>
         <ion-item>Menu Item</ion-item>
         <ion-item>Menu Item</ion-item>
         <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
+        <ion-item>Preferencias</ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>

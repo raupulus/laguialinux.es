@@ -1,7 +1,7 @@
 <template>
   <ion-header>
     <ion-navbar>
-      <ion-row>
+      <ion-row class="ion-hide-sm-up">
         <ion-col>
           <ion-buttons>
             <ion-menu-button menuToggle="main-menu"></ion-menu-button>
@@ -10,12 +10,24 @@
 
         <ion-col>
           <ion-title>
+            (logo)
+          </ion-title>
+        </ion-col>
+
+        <ion-col>
+          Input - Buscar
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-hide-sm-down">
+        <ion-col>
+          <ion-title>
             (logo) La Guía Linux
           </ion-title>
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
           <ion-button color="secondary">Publicaciones</ion-button>
           <ion-button color="tertiary">Noticias</ion-button>
