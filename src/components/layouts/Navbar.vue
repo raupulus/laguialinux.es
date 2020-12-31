@@ -148,6 +148,8 @@
           
         </ion-col>
       </ion-row>
+
+      <bread-crumb></bread-crumb>
     </ion-toolbar>
   </ion-header>
 </template>
@@ -160,14 +162,17 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { IonButton, IonPopover, IonBackButton } from '@ionic/vue';
+import BreadCrumb from '@/components/layouts/BreadCrumb.vue';
 
 export default defineComponent({
   name: 'NavBar',
   components: {
     IonButton, 
-    IonPopover
+    IonPopover,
+    BreadCrumb
   },
   setup() {
+ 
     const isOpenRef = ref(false);
     const event = ref();
     const setOpen = (state: boolean, event?: Event) => {
