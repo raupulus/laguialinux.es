@@ -1,71 +1,54 @@
 <template>
   <ion-page>
     <main-menu></main-menu>
+    <navbar></navbar>
     
     <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-checkbox slot="start"></ion-checkbox>
-          <ion-label>
-            <h1>Create Idea</h1>
-            <ion-note>Run Idea By Brandy</ion-note>
-          </ion-label>
-          <ion-badge color="success" slot="end">
-            5 Days
-          </ion-badge>
-        </ion-item>
-      </ion-list>
-
       <ion-row>
         <ion-col>
-          <ion-button @click="MainMenu.openCustom();">
-            BTN-1
-          </ion-button>
+          Slide
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <ion-button ion-button menuToggle="custom">Toggle Right Menu</ion-button>
-          <button ion-button menuToggle>Toggle Menu</button>
-          
-          <ion-toolbar color="primary">
-            <ion-buttons slot="start">
-              <ion-menu-button menuToggle="main-menu"></ion-menu-button>
-            </ion-buttons>
-            <ion-title>
-              3333
-            </ion-title>
-          </ion-toolbar>
+          3 bloques con imágenes: Vídeos en youtube, iniciarse en linux, contribuir
         </ion-col>
       </ion-row>
 
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button @click="() => router.push('/new')">
-          <ion-icon :icon="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
+      <ion-row>
+        <ion-col>
+          Descripción de filosofía software libre y animando a colaborar.
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Entradas con carga infinita.
+        </ion-col>
+      </ion-row>
+
+      
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonFab, IonFabButton, IonIcon, IonContent, IonPage} from '@ionic/vue';
+import { IonContent, IonPage} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 
 import MainMenu from '@/components/MainMenu.vue';
+import Navbar from '@/components/layouts/Navbar.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
     IonContent,
-    IonFab,
-    IonFabButton,
-    IonIcon,
     IonPage,
     MainMenu,
+    Navbar
   },
   setup() {
     return {

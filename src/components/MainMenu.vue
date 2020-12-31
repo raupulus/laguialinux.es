@@ -19,7 +19,7 @@
 
   <ion-router-outlet id="main"></ion-router-outlet>
 </template>
-<style>
+<style scoped>
 .main-menu {
   --width: 500px;
 }
