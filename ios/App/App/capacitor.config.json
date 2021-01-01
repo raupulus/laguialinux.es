@@ -1,1 +1,14 @@
-{}
+{
+  "appId": "io.ionic.starter",
+  "appName": "www.laguialinux.es",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "linuxAndroidStudioPath": "/home/fryntiz/.local/bin/android_studio"
+}
