@@ -136,6 +136,16 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-step-850: #453a43;
   --ion-color-step-900: #3a2f39;
   --ion-color-step-950: #2f232f;
+
+
+
+  /***************************************
+            MIS VARIABLES
+  ****************************************/
+  
+  --breadcrumb-theme-1: #e91e63;
+  --breadcrumb-theme-2: #fff;
+  --breadcrumb-theme-3: #c70041;
 }
 
 

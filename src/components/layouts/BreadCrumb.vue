@@ -1,12 +1,19 @@
 <template>
-  <ion-row class="ion-hide-sm-down box-navbar">
-    <ion-col size="12" class="background-dark">
-      Breadcrumb > Lugar 1 > Lugar 2
-      <div class="breadcrumb"><a class="breadcrumb__step breadcrumb__step--active" href="#">ECMAScript</a><a class="breadcrumb__step" href="#">HTML5</a><a class="breadcrumb__step" href="#">Node.js</a><a class="breadcrumb__step" href="#">Angular</a></div>
+  <ion-toolbar color="dark" class="background-transparent">
+    <ion-buttons slot="start">
+      <div class="breadcrumb">
+        <a class="breadcrumb__step" href="#">Ruta 1</a>
+        <a class="breadcrumb__step" href="#">Ruta 2</a>
+        <a class="breadcrumb__step" href="#">Ruta 3</a>
+        <a class="breadcrumb__step breadcrumb__step--active">Ruta 4 Activa</a>
+      </div>
+    </ion-buttons>
 
-
-    </ion-col>
-  </ion-row>
+    <ion-buttons slot="end">
+      <ion-back-button default-href="/home"></ion-back-button>
+      Volver
+    </ion-buttons>
+  </ion-toolbar>
 </template>
 
 <script lang="ts">
@@ -23,16 +30,12 @@ export default defineComponent({
   margin: 0 3px 5px 3px;
 }
 
-.background-dark {
-  background-color: var(--ion-color-dark);
+.background-transparent {
+  background-color: transparent !important;
+  --background: transparent;
+  --ion-color-base: transparent !important;
 }
 
-
-:root {
-  --breadcrumb-theme-1: #e91e63;
-  --breadcrumb-theme-2: #fff;
-  --breadcrumb-theme-3: #c70041;
-}
 .breadcrumb {
   text-align: center;
   display: inline-block;

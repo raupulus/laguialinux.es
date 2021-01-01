@@ -22,7 +22,6 @@
 
       <ion-row class="ion-hide-sm-down">
         <ion-col>
-          <ion-back-button default-href="/home"></ion-back-button>
           <ion-title>
             (logo) La Guía Linux
           </ion-title>
@@ -141,16 +140,15 @@
               
             </ion-list>
           </ion-popover>
-          
 
           <ion-button color="dark">About</ion-button>
-          
           
         </ion-col>
       </ion-row>
 
-      <bread-crumb></bread-crumb>
     </ion-toolbar>
+
+    <bread-crumb class="ion-hide-sm-down"></bread-crumb>
   </ion-header>
 </template>
 <style scoped>
