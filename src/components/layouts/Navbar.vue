@@ -23,6 +23,8 @@
       <ion-row class="ion-hide-sm-down">
         <ion-col>
           <ion-title>
+            <ion-img src="/img/logo/logo-60x60.png" 
+            style="width: 60px;"></ion-img>
             (logo) La Guía Linux
           </ion-title>
         </ion-col>
