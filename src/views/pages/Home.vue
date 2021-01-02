@@ -9,19 +9,17 @@
           size-lg="10" 
           offset-lg="1" 
           size-xl="8" 
-          offset-xl="2" 
-          style="background-color:yellow;">
-          3 bloques con imágenes: Vídeos en youtube, iniciarse en linux, contribuir
+          offset-xl="2">
 
           <ion-slides pager="true" :options="slideOpts" scrollbar="true">
             <ion-slide>
-              <h1>Slide 1</h1>
+              <ion-img src="/img/slides/main/slide1.png"></ion-img>
             </ion-slide>
             <ion-slide>
-              <h1>Slide 2</h1>
+              <ion-img src="/img/slides/main/slide2.png"></ion-img>
             </ion-slide>
             <ion-slide>
-              <h1>Slide 3</h1>
+              <ion-img src="/img/slides/main/slide3.png"></ion-img>
             </ion-slide>
           </ion-slides>
         </ion-col>
@@ -34,9 +32,53 @@
           size-xl="8" 
           offset-xl="2">
           <ion-row>
-            <ion-col size="12">
-              Descripción de filosofía software libre y animando a colaborar.
+            <ion-col size-sm="12"
+              size-md="6"
+              size-lg="4" 
+              size-xl="4">
+              <ion-card>
+                <ion-card-header>
+                  <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
+                  <ion-card-title>Vídeotutoriales Youtube</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+
             </ion-col>
+
+            <ion-col size="12"
+              size-md="6"
+              size-lg="4" 
+              size-xl="4">
+              <ion-card>
+                <ion-card-header>
+                  <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
+                  <ion-card-title>Entradas para iniciarse a Linux</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+            </ion-col>
+
+            <ion-col size="12"
+              size-md="6"
+              size-lg="4" 
+              size-xl="4">
+              <ion-card>
+                <ion-card-header>
+                  <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
+                  <ion-card-title>Contribuidores al sitio WEB</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12"
+          size-lg="10" 
+          offset-lg="1" 
+          size-xl="8" 
+          offset-xl="2">
+          <ion-row>
 
             <ion-col size-sm="12"
               size-md="6"
@@ -73,7 +115,6 @@
                   and climb a mountain or spend a week in the woods. Wash your spirit clean.
                 </ion-card-content>
               </ion-card>
-
             </ion-col>
 
             <ion-col size="12"
@@ -92,7 +133,6 @@
                   and climb a mountain or spend a week in the woods. Wash your spirit clean.
                 </ion-card-content>
               </ion-card>
-
             </ion-col>
 
             <ion-col size="12"
@@ -111,20 +151,13 @@
                   and climb a mountain or spend a week in the woods. Wash your spirit clean.
                 </ion-card-content>
               </ion-card>
-
             </ion-col>
           </ion-row>
         </ion-col>
       </ion-row>
-
-      <ion-row>
-        <ion-col>
-          Entradas con carga infinita.
-        </ion-col>
-      </ion-row>
-
-      
     </ion-content>
+
+    <footer-full></footer-full>
 </template>
 
 <script lang="ts">
@@ -134,12 +167,14 @@ import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 
 import Navbar from '@/components/layouts/Navbar.vue';
+import FooterFull from '@/components/layouts/FooterFull.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
     IonContent,
     Navbar,
+    FooterFull,
     IonSlides, 
     IonSlide,
     IonCard, 
