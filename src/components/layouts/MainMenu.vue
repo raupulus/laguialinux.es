@@ -9,7 +9,7 @@
     <ion-content>
       <ion-list>
         <ion-item>Inicio</ion-item>
-        <ion-item>Publicaciones</ion-item>
+        <ion-item>Guías</ion-item>
         <ion-item>Noticias</ion-item>
         <ion-item>Apps</ion-item>
         <ion-item>Contacto</ion-item>

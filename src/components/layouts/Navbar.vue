@@ -34,14 +34,30 @@
       <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
             <ion-button color="secondary">Inicio</ion-button>
-            <ion-button color="primary">Publicaciones</ion-button>
             <ion-button color="primary">Noticias</ion-button>
+            <ion-button color="primary">Guías</ion-button>
+            <ion-button color="primary">Vídeos</ion-button>
+            <ion-button color="primary">IOT</ion-button>
             <ion-button color="primary">Apps</ion-button>
-            <ion-button color="primary">Contacto</ion-button>
-            <ion-button color="primary">Videotutoriales</ion-button>
+            <ion-button color="primary">Eventos</ion-button>
+            <ion-button color="primary">Hardware</ion-button>
+            <ion-button color="primary">Aplicaciones</ion-button>
+            <ion-button color="primary">Pentesting</ion-button>
+            <ion-button color="primary">Servidores</ion-button>
             <ion-button color="primary">Distribuciones</ion-button>
             <ion-button color="primary">Juegos</ion-button>
-
+            <ion-button color="primary">Comandos</ion-button>
+            <ion-button color="primary">Alternativas a Programas</ion-button>
+            <ion-button color="primary">Atajos de Teclado</ion-button>
+            <ion-button color="primary">Cursos</ion-button>
+            <ion-button color="primary">Listado de Programas</ion-button>
+            <ion-button color="primary">Problemas Solucionados</ion-button>
+            <ion-button color="primary">Redes</ion-button>
+            <ion-button color="primary">Scripts</ion-button>
+            <ion-button color="primary">Servidores</ion-button>
+            <ion-button color="primary">Smartphones</ion-button>
+            <ion-button color="primary">Terminal</ion-button>
+            <ion-button color="primary">Conceptos</ion-button>
 
             <ion-button color="primary" @click="setOpen(true, $event)">
               Enlaces Amigos
@@ -144,6 +160,8 @@
                 
               </ion-list>
             </ion-popover>
+
+            <ion-button color="primary">Contacto</ion-button>
 
             <ion-button color="primary">About</ion-button>
         </ion-col>
