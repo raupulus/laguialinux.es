@@ -3,7 +3,11 @@ import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
 
 export class LocalStorageService {
-  constructor ( private storage: Storage) {}
+  private storage: any;
+
+  constructor () {
+    this.storage = Storage;
+  }
 
   /**
    * Guarda un objeto en el Storage Local.
@@ -24,7 +28,8 @@ export class LocalStorageService {
   async getObject (key: string) {
     const ret = await Storage.get({ key: key });
 
-    return ret ? JSON.parse(ret.value) : null
+    return {test: 'test'};
+    //return ret ? JSON.parse(ret.value) : null
   }
 
   async setItem (key: string, value: any) {

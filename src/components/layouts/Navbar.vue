@@ -33,6 +33,16 @@
 
       <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
+            <ion-button color="primary" 
+                        v-for="element in menu" 
+                        :key="element.id"
+            >
+              {{ element.title }}
+            </ion-button>
+        </ion-col>
+        
+        <!--
+        <ion-col class="center">
             <ion-button color="secondary">Inicio</ion-button>
             <ion-button color="primary">Noticias</ion-button>
             <ion-button color="primary">Guías</ion-button>
@@ -165,6 +175,7 @@
 
             <ion-button color="primary">About</ion-button>
         </ion-col>
+        -->
       </ion-row>
 
     </ion-toolbar>
@@ -175,18 +186,23 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { IonButton, IonPopover, IonBackButton, IonButtons } from '@ionic/vue';
+import { IonButton } from '@ionic/vue';
 import BreadCrumb from '@/components/layouts/BreadCrumb.vue';
+import { MainMenuService } from '@/services/main-menu-service';
+
 
 export default defineComponent({
   name: 'NavBar',
   components: {
     IonButton, 
-    IonPopover,
     BreadCrumb,
   },
+  data() {
+    return {
+      menu: [{}]
+    }
+  },
   setup() {
- 
     const isOpenRef = ref(false);
     const event = ref();
     const setOpen = (state: boolean, event?: Event) => {
@@ -195,9 +211,15 @@ export default defineComponent({
     }
     return { isOpenRef, setOpen, event }
   },
-  methods: {
+  beforeCreate() {
+    new MainMenuService().getMenu().then((response) => {
+      this.menu = response;
+    });
+  },
 
-  }
+  methods: {
+    
+  },
 });
 </script>
 
