@@ -199,7 +199,7 @@ export default defineComponent({
   },
   data() {
     return {
-      menu: [{}]
+      menu: null
     }
   },
   setup() {
@@ -213,6 +213,8 @@ export default defineComponent({
   },
   beforeCreate() {
     new MainMenuService().getMenu().then((response) => {
+      console.log('beforeCreate:');
+      console.log(response);
       this.menu = response;
     });
   },

@@ -44,7 +44,13 @@ export class LocalStorageService {
    * @param key Recibe la clave del elemento a borrar.
    */
   async getItem (key: string) {
-    return await Storage.get({ key: key });
+    const item = await Storage.get({ key: key });
+
+    if (item) {
+      return item.value;
+    }
+
+    return null;
   }
   
   /**
