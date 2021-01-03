@@ -1,5 +1,5 @@
 <template>
-    <navbar></navbar>
+    <navbar active="home"></navbar>
     
     <ion-content color="dark">
       <ion-row class="center">

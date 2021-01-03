@@ -13,23 +13,50 @@ export class MainMenuService {
     const response = [
       {
         id: 1,
-        title: 'Inicio'
+        title: 'Inicio',
+        name: 'home',
+        url: '/home'
       },
       {
         id: 2,
-        title: 'Noticias'
+        title: 'Noticias',
+        name: 'posts',
+        url: '/posts'
       },
       {
         id: 3,
-        title: 'Guías'
+        title: 'Guías',
+        name: 'guides',
+        sections: [
+          {
+            id: 1,
+            title: 'Sección 1',
+            name: 'section1',
+            url: '#'
+          },
+          {
+            id: 2,
+            title: 'Sección 2',
+            name: 'section2',
+            url: '#'
+          },
+          {
+            id: 3,
+            title: 'Sección 3',
+            name: 'section3',
+            url: '#'
+          },
+        ]
       },
       {
         id: 4,
-        title: 'Vídeos'
+        title: 'Vídeos',
+        name: 'videos',
+        url: '/videos'
       },
       {
         id: 5,
-        title: 'IOT'
+        title: 'IOT',
       },
       {
         id: 6,
@@ -148,6 +175,8 @@ export class MainMenuService {
    * API en para además cachearlo en local
    */
   async getMenu () {
+
+    //TODO → Esto es temporal, quitar al implementar la API
     await this.localStorage.clear();
 
     let menu: any = await this.localStorage.getItem('menu');
@@ -160,12 +189,5 @@ export class MainMenuService {
     }
 
     return menu;
-
-    /*
-    Promise.resolve(this.menu).then(function(menu) {
-      console.log(menu);
-      return menu;
-    })
-    */
   }
 }

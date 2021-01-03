@@ -1,5 +1,5 @@
 <template>
-    <navbar></navbar>
+    <navbar active="posts"></navbar>
     
     <ion-content color="dark">
 
