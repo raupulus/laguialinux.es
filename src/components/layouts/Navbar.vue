@@ -39,7 +39,7 @@
 
       <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
-            <ion-button :color="element.name == active ? 'secondary' : primary" 
+            <ion-button :color="element.name == active ? 'secondary' : 'primary'" 
                         :disabled="element.name == active"
                         :href="element.url"
                         @click="submenuOpen(element.name)"
@@ -49,142 +49,6 @@
               {{ element.title }}
             </ion-button>
         </ion-col>
-        
-        <!--
-        <ion-col class="center">
-            <ion-button color="secondary">Inicio</ion-button>
-            <ion-button color="primary">Noticias</ion-button>
-            <ion-button color="primary">Guías</ion-button>
-            <ion-button color="primary">Vídeos</ion-button>
-            <ion-button color="primary">IOT</ion-button>
-            <ion-button color="primary">Apps</ion-button>
-            <ion-button color="primary">Eventos</ion-button>
-            <ion-button color="primary">Hardware</ion-button>
-            <ion-button color="primary">Aplicaciones</ion-button>
-            <ion-button color="primary">Pentesting</ion-button>
-            <ion-button color="primary">Servidores</ion-button>
-            <ion-button color="primary">Distribuciones</ion-button>
-            <ion-button color="primary">Juegos</ion-button>
-            <ion-button color="primary">Comandos</ion-button>
-            <ion-button color="primary">Alternativas a Programas</ion-button>
-            <ion-button color="primary">Atajos de Teclado</ion-button>
-            <ion-button color="primary">Cursos</ion-button>
-            <ion-button color="primary">Listado de Programas</ion-button>
-            <ion-button color="primary">Problemas Solucionados</ion-button>
-            <ion-button color="primary">Redes</ion-button>
-            <ion-button color="primary">Scripts</ion-button>
-            <ion-button color="primary">Servidores</ion-button>
-            <ion-button color="primary">Smartphones</ion-button>
-            <ion-button color="primary">Terminal</ion-button>
-            <ion-button color="primary">Conceptos</ion-button>
-
-            <ion-button color="primary" @click="setOpen(true, $event)">
-              Enlaces Amigos
-            </ion-button>
-            <ion-popover
-              :is-open="isOpenRef"
-              css-class="my-custom-class"
-              :event="event"
-              :translucent="true"
-              @onDidDismiss="setOpen(false)"
-            >
-              <ion-list>
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Asociaciones
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Podcasts
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-                
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Canales de Telegram
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Blogs
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Webs
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Canales de Youtube
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Scripts
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-label>
-                    <ion-button color="danger" expand="full" size="large">
-                      Distribuciones
-                      </ion-button>
-                    </ion-label>
-                </ion-item>
-                
-              </ion-list>
-            </ion-popover>
-
-            <ion-button color="primary">Contacto</ion-button>
-
-            <ion-button color="primary">About</ion-button>
-        </ion-col>
-        -->
       </ion-row>
 
     </ion-toolbar>
@@ -194,7 +58,11 @@
                  class="ion-hide-sm-down center">
       <ion-row>
         <ion-col class="center">
-            <ion-button v-for="element in submenu" :key="element" color="dark">
+            <ion-button v-for="element in submenu" 
+                        :key="element" 
+                        :color="element.name == active ? 'secondary' : 'dark'" 
+                        :disabled="element.name == active"
+                        :href="element.url">
               {{ element.title }}
             </ion-button>
         </ion-col>
@@ -236,7 +104,7 @@ export default defineComponent({
     },
     activeSubmenu: {
       type: String,
-      default: null
+      default: 'home'
     }
   },
   setup() {
@@ -267,25 +135,16 @@ export default defineComponent({
      * Abre el submenú para el menú pulsado.
      */
     submenuOpen(name: string) {
-      if (this.isActiveSubmenu) {
-        this.submenuClose();
-        return;
-      }
-
       if (name && this.menu && this.menu.length) {
         const submenu = this.menu.filter(ele => {
             return ele.name === name;
         });
-
-        console.log('submenu');
-        console.log(submenu);
 
         if (submenu && submenu.length && submenu[0].sections ) {
           this.submenu = submenu[0].sections;
           this.isActiveSubmenu = true;
         }
       }
-      console.log('submenuOpen');
     }
   },
 });
