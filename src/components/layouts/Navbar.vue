@@ -194,7 +194,7 @@
                  class="ion-hide-sm-down center">
       <ion-row>
         <ion-col class="center">
-            <ion-button v-for="element in submenu" :key="element">
+            <ion-button v-for="element in submenu" :key="element" color="dark">
               {{ element.title }}
             </ion-button>
         </ion-col>
@@ -250,8 +250,6 @@ export default defineComponent({
   },
   beforeCreate() {
     new MainMenuService().getMenu().then((response) => {
-      console.log('beforeCreate:');
-      console.log(response);
       this.menu = response;
     });
   },
@@ -279,11 +277,11 @@ export default defineComponent({
             return ele.name === name;
         });
 
-        console.log(submenu);
+        console.log('submenu');
         console.log(submenu);
 
-        if (submenu && submenu.sections && submenu.length) {
-          this.submenu = submenu.sections;
+        if (submenu && submenu.length && submenu[0].sections ) {
+          this.submenu = submenu[0].sections;
           this.isActiveSubmenu = true;
         }
       }
