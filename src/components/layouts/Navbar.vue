@@ -46,6 +46,9 @@
                         v-for="element in menu" 
                         :key="element.id"
             >
+              <ion-icon v-if="element.sections"
+                        slot="icon-only" 
+                        :icon="caretDownOutline"></ion-icon>
               {{ element.title }}
             </ion-button>
         </ion-col>
@@ -57,37 +60,46 @@
                  color="primary" 
                  class="ion-hide-sm-down center">
       <ion-row>
+        <div>
+          <ion-button color="dark" @click="submenuClose()" class="closeMenu">
+            <ion-icon slot="icon-only"
+                      size="large"
+                      color="warning"
+                      fill="outline"
+                      shape="round"
+                      strong="true"
+                      :icon="closeCircleOutline"></ion-icon>
+          </ion-button>
+        </div>
         <ion-col class="center">
-            <ion-button v-for="element in submenu" 
-                        :key="element" 
-                        :color="element.name == active ? 'secondary' : 'dark'" 
-                        :disabled="element.name == active"
-                        :href="element.url">
-              {{ element.title }}
-            </ion-button>
+          <ion-button v-for="element in submenu" 
+                      :key="element" 
+                      :color="element.name == active ? 'secondary' : 'dark'" 
+                      :disabled="element.name == active"
+                      :href="element.url">
+            {{ element.title }}
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-toolbar>
 
-    <bread-crumb class="ion-hide-sm-down"></bread-crumb>
   </ion-header>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { IonButton } from '@ionic/vue';
-import BreadCrumb from '@/components/layouts/BreadCrumb.vue';
+import { IonButton, IonButtons } from '@ionic/vue';
 import { MainMenuService } from '@/services/main-menu-service';
+import { caretDownOutline, closeCircleOutline } from 'ionicons/icons';
 
 // Interfaces
 import { MenuCollection, SubmenuCollection } from '@/interfaces/menu-interface';
-
 
 export default defineComponent({
   name: 'NavBar',
   components: {
     IonButton, 
-    BreadCrumb,
+    IonButtons
   },
   data() {
     return {
@@ -104,7 +116,7 @@ export default defineComponent({
     },
     activeSubmenu: {
       type: String,
-      default: 'home'
+      default: ''
     }
   },
   setup() {
@@ -114,7 +126,7 @@ export default defineComponent({
       //event.value = event; 
       isOpenRef.value = state;
     }
-    return { isOpenRef, setOpen, event }
+    return { isOpenRef, setOpen, event, caretDownOutline, closeCircleOutline}
   },
   beforeCreate() {
     new MainMenuService().getMenu().then((response) => {
@@ -157,5 +169,9 @@ export default defineComponent({
 
 .inline-block {
   display: inline-block;
+}
+
+.closeMenu {
+
 }
 </style>
