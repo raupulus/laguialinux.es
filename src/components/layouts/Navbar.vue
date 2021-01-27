@@ -152,7 +152,7 @@ export default defineComponent({
             return ele.name === name;
         });
 
-        if (submenu && submenu.length && submenu[0].sections ) {
+        if (submenu && submenu.length && submenu[0] && submenu[0].sections ) {
           this.submenu = submenu[0].sections;
           this.isActiveSubmenu = true;
         }

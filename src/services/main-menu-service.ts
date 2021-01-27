@@ -1,9 +1,11 @@
 
 // TODO → Esto quizás tenga sentido estar global, se usará en todos los apartados y con más servicios.
 import { LocalStorageService } from '@/services/local-storage-service';
+import { MenuCollection } from '../interfaces/menu-interface';
 
 export class MainMenuService {
   private localStorage = new LocalStorageService();
+  public menu: MenuCollection[] = [];
 
   /**
    * Conecta a la API y descarga el menú de navegación.
@@ -346,6 +348,7 @@ export class MainMenuService {
     ];
 
     this.localStorage.setObject('menu', response);
+    this.localStorage.setItem('menu_created_at', Date.now().toString());
     
     return response;
   }
@@ -366,28 +369,46 @@ export class MainMenuService {
   }
 
   /**
+   * Comprueba si ha expirado el tiempo de almacenamiento en local.
+   * 
+   * 5 minutos = 300 segundos = 300000 milisegundos
+   * 
+   */
+  private async checkExpireLocalStorageMenu() {
+    const dateSaved = await this.localStorage.getItem('menu_created_at');
+
+    if (dateSaved && dateSaved.length) {
+      const now: number = parseInt(Date.now().toString());
+      const old: number = parseInt(dateSaved.toString());
+
+      return (now - old) > 300000;
+    }
+
+    return true;
+  }
+
+  /**
    * Obtiene el menú comprobando si está cacheado en local o consultando a su
    * API en para además cachearlo en local
    */
   async getMenu () {
-    const menuExpired = false;  // TODO → comprobar tiempo para expirarlo
-    let menu: any = null;
+    const existMenuInCache = await this.localStorage.checkExistItem('menu');
+    const menuExpired = await this.checkExpireLocalStorageMenu();
 
     //TODO → Esto es temporal, quitar al implementar la API
     //await this.localStorage.clear();
 
-    const existMenuInCache = await this.localStorage.checkExistItem('menu');
-
+    // Comprueba si ha pasado el tiempo en el que es válido el caché
     if (existMenuInCache) {
-      menu = await this.getMenuFromLocalStorage();
+      this.menu = await this.getMenuFromLocalStorage();
     }
 
-    if (! menu || menuExpired) {
+    if (! this.menu || menuExpired) {
       console.log('RECARGA MENÚ DESDE API');
 
-      menu = await this.getMenuFromApi();
+      this.menu = await this.getMenuFromApi();
     }
 
-    return menu;
+    return this.menu;
   }
 }
