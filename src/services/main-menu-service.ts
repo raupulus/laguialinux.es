@@ -10,6 +10,7 @@ export class MainMenuService {
    */
   private async getMenuFromApi() {
 
+
     const response = [
       {
         id: 1,
@@ -344,7 +345,8 @@ export class MainMenuService {
       }
     ];
 
-    this.localStorage.setItem('menu', response);
+    this.localStorage.setObject('menu', response);
+    
     return response;
   }
 
@@ -352,14 +354,15 @@ export class MainMenuService {
    * Comprueba si el menú se encuentra almacenado
    */
   async checkExistLocalStorageMenu() {
-    return await this.localStorage.getItem('menu') ? true : false;
+    return await this.localStorage.checkExistItem('menu');
+    //return await this.localStorage.getItem('menu') ? true : false;
   }
 
   /**
    * Obtiene el menú desde el storage local.
    */
   private async getMenuFromLocalStorage() {
-    return await this.localStorage.getItem('menu');
+    return await this.localStorage.getObject('menu');
   }
 
   /**
@@ -367,16 +370,21 @@ export class MainMenuService {
    * API en para además cachearlo en local
    */
   async getMenu () {
+    const menuExpired = false;  // TODO → comprobar tiempo para expirarlo
+    let menu: any = null;
 
     //TODO → Esto es temporal, quitar al implementar la API
-    await this.localStorage.clear();
+    //await this.localStorage.clear();
 
-    let menu: any = await this.localStorage.getItem('menu');
+    const existMenuInCache = await this.localStorage.checkExistItem('menu');
 
-    if (menu) {
-      //TODO → TEST tiempo que lleva en caché, si lleva más de X recargar de api
+    if (existMenuInCache) {
       menu = await this.getMenuFromLocalStorage();
-    } else {
+    }
+
+    if (! menu || menuExpired) {
+      console.log('RECARGA MENÚ DESDE API');
+
       menu = await this.getMenuFromApi();
     }
 

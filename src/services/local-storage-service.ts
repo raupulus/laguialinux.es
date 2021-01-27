@@ -15,7 +15,7 @@ export class LocalStorageService {
    * @param object Recibe el objeto que será guardado en el almacenamiento.
    */  
   async setObject (key: string, object: object) {
-    await Storage.set({
+    return await Storage.set({
       key: key,
       value: JSON.stringify(object)
     });
@@ -28,12 +28,17 @@ export class LocalStorageService {
   async getObject (key: string) {
     const ret = await Storage.get({ key: key });
 
-    return {test: 'test'};
-    //return ret ? JSON.parse(ret.value) : null
+    return ret && ret.value ? JSON.parse(ret.value) : null
   }
 
-  async setItem (key: string, value: any) {
-    await Storage.set({
+  /**
+   * Almacena un elemento recibido como texto plano.
+   * 
+   * @param key Recibe la clave del elemento a borrar.
+   * @param value Una cadena de texto con el valor a guardar.
+   */
+  async setItem (key: string, value: string) {
+    return await Storage.set({
       key: key,
       value: value
     });
@@ -51,6 +56,17 @@ export class LocalStorageService {
     }
 
     return null;
+  }
+
+  /**
+   * Comprueba si un elemento está seteado en caché.
+   * 
+   * @param key Recibe la clave del elemento a buscar.
+   */
+  async checkExistItem(key: string) {
+    const cacheKeys = await Storage.keys();
+
+    return cacheKeys.keys.includes(key) ? true : false
   }
   
   /**
