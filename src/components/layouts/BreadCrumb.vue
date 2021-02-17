@@ -18,9 +18,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { IonToolbar, IonButtons, IonBackButton } from '@ionic/vue';
 
 export default defineComponent({
-  name: 'BreadCrumb'
+  name: 'BreadCrumb',
+  components: {
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+  }
 });
 </script>
 

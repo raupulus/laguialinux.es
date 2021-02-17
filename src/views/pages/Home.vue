@@ -3,12 +3,12 @@
     
     <ion-content color="dark">
       <ion-row class="center">
-        <ion-col 
+        <ion-col
           size-sm="12"
           offset-sm="0"
-          size-lg="10" 
-          offset-lg="1" 
-          size-xl="8" 
+          size-lg="10"
+          offset-lg="1"
+          size-xl="8"
           offset-xl="2">
 
           <ion-slides pager="true" :options="slideOpts" scrollbar="true">
@@ -34,7 +34,7 @@
           <ion-row>
             <ion-col size-sm="12"
               size-md="6"
-              size-lg="4" 
+              size-lg="4"
               size-xl="4">
               <ion-card>
                 <ion-card-header>
@@ -80,10 +80,20 @@
 </template>
 
 <script lang="ts">
-import { IonCard, IonSlides, IonSlide, IonContent} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { add } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
+import { 
+  IonSlide, 
+  IonSlides, 
+  IonContent,
+  IonCol,
+  IonRow,
+  IonCard,
+  IonCardTitle,
+  IonCardHeader,
+  IonImg,
+} from '@ionic/vue';
 
 import Navbar from '@/components/layouts/Navbar.vue';
 import FooterFull from '@/components/layouts/FooterFull.vue';
@@ -92,13 +102,18 @@ import ContentsGrid from '@/components/ContentsGrid.vue';
 export default defineComponent({
   name: 'Home',
   components: {
-    IonContent,
     Navbar,
     FooterFull,
     ContentsGrid,
+    IonSlide, 
     IonSlides, 
-    IonSlide,
+    IonContent,
+    IonCol,
+    IonRow,
     IonCard,
+    IonCardTitle,
+    IonCardHeader,
+    IonImg,
   },
   setup() {
     const slideOpts = {

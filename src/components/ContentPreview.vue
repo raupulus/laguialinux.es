@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardContent, IonCardSubtitle } from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonImg } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -39,7 +39,10 @@ export default defineComponent({
   components: {
     IonCard, 
     IonCardContent, 
-    IonCardSubtitle
+    IonCardSubtitle,
+    IonCardHeader,
+    IonCardTitle,
+    IonImg
   },
 });
 </script>

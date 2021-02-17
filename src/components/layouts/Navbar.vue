@@ -13,10 +13,14 @@
         <ion-col>
           <ion-title>
             <ion-back-button default-href="/home"></ion-back-button>
-            <ion-img src="/img/logo/logo-60x60.png" 
-            style="width: 60px;" class="inline-block"></ion-img>
-            <ion-img src="/img/logo/laguialinux-text-red.png" 
-            style="width: 500px;" class="inline-block"></ion-img>
+
+            <ion-img src="/img/logo/logo-60x60.png"
+                     style="width: 60px;"
+                     class="inline-block"></ion-img>
+
+            <ion-img src="/img/logo/laguialinux-text-red.png"
+                     style="width: 500px;"
+                     class="inline-block"></ion-img>
           </ion-title>
         </ion-col>
 
@@ -41,7 +45,7 @@
         <ion-col class="center">
             <ion-button :color="element.name == active ? 'secondary' : 'primary'" 
                         :disabled="element.name == active"
-                        :href="element.url"
+                        :href="element.url ?? '#'"
                         @click="submenuOpen(element.name)"
                         v-for="element in menu" 
                         :key="element.id"
@@ -76,7 +80,7 @@
                       :key="element" 
                       :color="element.name == active ? 'secondary' : 'dark'" 
                       :disabled="element.name == active"
-                      :href="element.url">
+                      :href="element.url ?? '#'">
             {{ element.title }}
           </ion-button>
         </ion-col>
@@ -88,9 +92,21 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { IonButton, IonButtons } from '@ionic/vue';
 import { MainMenuService } from '@/services/main-menu-service';
 import { caretDownOutline, closeCircleOutline } from 'ionicons/icons';
+import { 
+  IonCol, 
+  IonRow, 
+  IonMenuButton, 
+  IonImg, 
+  IonButton, 
+  IonButtons, 
+  IonBackButton, 
+  IonIcon,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+} from '@ionic/vue';
 
 // Interfaces
 import { MenuCollection, SubmenuCollection } from '@/interfaces/menu-interface';
@@ -98,8 +114,17 @@ import { MenuCollection, SubmenuCollection } from '@/interfaces/menu-interface';
 export default defineComponent({
   name: 'NavBar',
   components: {
+    IonCol, 
+    IonRow, 
+    IonMenuButton, 
+    IonImg, 
     IonButton, 
-    IonButtons
+    IonButtons, 
+    IonBackButton,
+    IonIcon,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
   },
   data() {
     return {

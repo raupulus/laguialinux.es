@@ -23,9 +23,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ContentPreview from '@/components/ContentPreview.vue';
+import { IonRow, IonCol } from '@ionic/vue';
 
 export default defineComponent({
   name: 'ContentGrid',
+  components: {
+    ContentPreview,
+    IonRow,
+    IonCol
+  },
   data() {
     return {
       contents: [
@@ -75,9 +81,6 @@ export default defineComponent({
         }
       ]
     }
-  },
-  components: {
-    ContentPreview
   },
 });
 </script>
