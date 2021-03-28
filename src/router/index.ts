@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import Home from '../views/pages/Home.vue';
-import Posts from '@/views/pages/Posts.vue';
-import Pages from '@/views/pages/Pages.vue';
+import GenericPageListElements from '../views/pages/GenericPageListElements.vue';
+import GenericPageShowContent from '../views/pages/GenericPageShowContent.vue';
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,15 +16,20 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/pages',
-    name: 'Pages',
-    component: Pages
+    path: '/section/:slug',
+    name: 'section',
+    component: GenericPageListElements
   },
   {
-    path: '/posts',
-    name: 'Posts',
-    component: Posts
-  }
+    path: '/section/:subsection/:slug',
+    name: 'subsection',
+    component: GenericPageListElements
+  },
+  {
+    path: '/content/:slug',
+    name: 'content',
+    component: GenericPageShowContent
+  },
 ]
 
 const router = createRouter({

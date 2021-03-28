@@ -4,6 +4,7 @@
     <ion-content color="dark">
       <bread-crumb class="ion-hide-sm-down"></bread-crumb>
       
+      <h1>Show Individual content</h1>
 
       <contents-grid></contents-grid>
       
@@ -22,7 +23,7 @@ import FooterFull from '@/components/layouts/FooterFull.vue';
 import ContentsGrid from '@/components/ContentsGrid.vue';
 
 export default defineComponent({
-  name: 'Posts',
+  name: 'GenericPageShowContent',
   components: {
     BreadCrumb,
     Navbar,
