@@ -18,30 +18,35 @@ export class MainMenuService {
         id: 1,
         title: 'Inicio',
         name: 'home',
-        url: '/home'
+        url: '/home',
+        template: 'generic'
       },
       {
         id: 2,
         title: 'Noticias',
         name: 'posts',
-        url: '/posts'
+        group: 'section',
+        url: '/section/posts',
+        template: 'generic'
       },
       {
         id: 4,
         title: 'Vídeos',
         name: 'videos',
+        url: 'section/videos',
+        template: 'generic',
         sections: [
           {
             id: 1,
             title: 'Lista de Vídeos 1',
             name: 'lista-de-videos-1',
-            url: '#'
+            url: 'lista-de-videos-1'
           },
           {
             id: 2,
             title: 'Lista de Vídeos 2',
             name: 'lista-de-videos-2',
-            url: '#'
+            url: 'lista-de-videos-2'
           },
         ]
       },
@@ -49,18 +54,19 @@ export class MainMenuService {
         id: 3,
         title: 'Guías',
         name: 'guides',
+        template: 'generic',
         sections: [
           {
             id: 18,
             title: 'Listado de Programas',
             name: 'software-list',
-            url: '#'
+            url: 'software-list'
           },
           {
             id: 19,
             title: 'Problemas Solucionados',
             name: 'solve-problems',
-            url: '#'
+            url: 'solve-problems'
           },
           {
             id: 20,
@@ -146,6 +152,7 @@ export class MainMenuService {
         id: 5,
         title: 'IOT',
         name: 'iot',
+        template: 'generic',
         sections: [
           {
             id: 1,
@@ -189,6 +196,7 @@ export class MainMenuService {
         id: 8,
         title: 'Hardware',
         name: 'hardware',
+        template: 'generic',
         sections: [
           {
             id: 1,
@@ -208,6 +216,7 @@ export class MainMenuService {
         id: 9,
         title: 'Aplicaciones',
         name: 'software',
+        template: 'generic',
         sections: [
           {
             id: 1,
@@ -251,6 +260,7 @@ export class MainMenuService {
         id: 26,
         title: 'Enlaces Amigos',
         name: 'links-friends',
+        template: 'generic',
         sections: [
           {
             id: 1,
@@ -306,6 +316,7 @@ export class MainMenuService {
         id: 17,
         title: 'Cursos',
         name: 'curses',
+        template: 'generic',
         sections: [
           {
             id: 1,
@@ -325,25 +336,29 @@ export class MainMenuService {
         id: 6,
         title: 'Apps',
         name: 'apps',
-        url: '/apps'
+        url: '/apps',
+        template: 'generic'
       },
       {
         id: 7,
         title: 'Eventos',
         name: 'events',
-        url: '/events'
+        url: '/events',
+        template: 'generic'
       },
       {
         id: 27,
         title: 'Contacto',
         name: 'contact',
-        url: '/contact'
+        url: '/contact',
+        template: 'generic'
       },
       {
         id: 28,
         title: 'About',
         name: 'about',
-        url: '/about'
+        url: '/about',
+        template: 'generic',
       }
     ];
 

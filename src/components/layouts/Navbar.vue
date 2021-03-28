@@ -79,7 +79,7 @@
                       :key="element" 
                       :color="element.name == active ? 'secondary' : 'dark'" 
                       :disabled="element.name == active"
-                      :href="element.url ?? '#'">
+                      :href="getSubmenuUrl(element.name)">
             {{ element.title }}
           </ion-button>
         </ion-col>
@@ -129,11 +129,12 @@ export default defineComponent({
     return {
       menu: [] as MenuCollection[],
       submenu: [] as SubmenuCollection[],
-      isActiveSubmenu: this.activeSubmenu ? true : false
+      isActiveSubmenu: this.activeSubmenu ? true : false,
+      menuSelected: ''
     }
   },
   props: {
-    // Indica el elemento actio en el navbar
+    // Indica el elemento activo en el navbar
     active: {
       type: String,
       default: 'home'
@@ -179,12 +180,37 @@ export default defineComponent({
           return ele.name === name;
       });
 
-      if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].url) {
+      if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].url && !selectMenu[0].sections) {
         window.location.href = selectMenu[0].url;
-        //console.log(selectMenu[0]);
       } else if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections ) {
         this.submenu = selectMenu[0].sections;
         this.isActiveSubmenu = true;
+        this.menuSelected = name;
+      }
+    },
+
+    getSubmenuUrl(nameSubmenu: string) {
+      if (!nameSubmenu || !this.submenu || !this.submenu.length) {
+        return null;
+      }
+
+      const selectMenu = this.menu.filter(ele => {
+        return ele.name === this.menuSelected;
+      });
+
+      const selectSubMenu = this.submenu.filter(ele => {
+        return ele.name === nameSubmenu;
+      });
+
+      console.log(selectMenu[0]);
+      console.log(selectSubMenu[0]);
+
+      if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections && 
+          selectSubMenu && selectSubMenu.length && selectSubMenu[0]) {
+
+//TODO → obtener grupo en lugar de poner en main-menu-services "selected" directamente (añador nuevo atributo "group" con la sección)
+
+        return (selectMenu[0].url ?? '') + '/' + (selectSubMenu[0].url ?? '');
       }
     }
   },

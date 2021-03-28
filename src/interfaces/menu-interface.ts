@@ -4,6 +4,7 @@ export interface MenuCollection {
     name: string;
     url?: string | null;
     sections?: SubmenuCollection[] | null;
+    template?: string | null,
 }
 
 export interface SubmenuCollection {
