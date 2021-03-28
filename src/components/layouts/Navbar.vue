@@ -45,7 +45,6 @@
         <ion-col class="center">
             <ion-button :color="element.name == active ? 'secondary' : 'primary'" 
                         :disabled="element.name == active"
-                        :href="element.url ?? '#'"
                         @click="submenuOpen(element.name)"
                         v-for="element in menu" 
                         :key="element.id"
@@ -172,15 +171,20 @@ export default defineComponent({
      * Abre el submenú para el menú pulsado.
      */
     submenuOpen(name: string) {
-      if (name && this.menu && this.menu.length) {
-        const submenu = this.menu.filter(ele => {
-            return ele.name === name;
-        });
+      if (!name || !this.menu || !this.menu.length) {
+        return null;
+      }
 
-        if (submenu && submenu.length && submenu[0] && submenu[0].sections ) {
-          this.submenu = submenu[0].sections;
-          this.isActiveSubmenu = true;
-        }
+      const selectMenu = this.menu.filter(ele => {
+          return ele.name === name;
+      });
+
+      if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].url) {
+        window.location.href = selectMenu[0].url;
+        //console.log(selectMenu[0]);
+      } else if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections ) {
+        this.submenu = selectMenu[0].sections;
+        this.isActiveSubmenu = true;
       }
     }
   },
