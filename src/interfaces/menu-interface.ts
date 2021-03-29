@@ -2,14 +2,13 @@ export interface MenuCollection {
     id: number;
     title: string;
     name: string;
-    url?: string | null;
+    group?: string | null;
     sections?: SubmenuCollection[] | null;
-    template?: string | null,
+    template?: string | 'generic',
 }
 
 export interface SubmenuCollection {
     id: number;
     title: string;
     name: string;
-    url?: string | null;
 }

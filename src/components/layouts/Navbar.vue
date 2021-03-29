@@ -180,8 +180,23 @@ export default defineComponent({
           return ele.name === name;
       });
 
-      if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].url && !selectMenu[0].sections) {
-        window.location.href = selectMenu[0].url;
+      if (selectMenu && selectMenu.length && selectMenu[0] && !selectMenu[0].sections) {
+        const group = selectMenu[0].group ?? null;
+        const nameTitle = selectMenu[0].name ?? null;
+
+        let url = '';
+
+        if (group) {
+          url += '/' + group;
+        }
+
+        if (nameTitle) {
+          url += '/' + nameTitle;
+        }
+
+        console.log(url);
+
+        window.location.href = url;
       } else if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections ) {
         this.submenu = selectMenu[0].sections;
         this.isActiveSubmenu = true;
@@ -202,15 +217,29 @@ export default defineComponent({
         return ele.name === nameSubmenu;
       });
 
-      console.log(selectMenu[0]);
-      console.log(selectSubMenu[0]);
-
       if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections && 
           selectSubMenu && selectSubMenu.length && selectSubMenu[0]) {
 
-//TODO → obtener grupo en lugar de poner en main-menu-services "selected" directamente (añador nuevo atributo "group" con la sección)
+        const group = selectMenu[0].group ?? null;
+        const nameTitle = selectMenu[0].name ?? null;
+        const nameSubtitle = selectSubMenu[0].name ?? null;
 
-        return (selectMenu[0].url ?? '') + '/' + (selectSubMenu[0].url ?? '');
+        let url = '';
+
+        if (group) {
+          url += '/' + group;
+        }
+
+        if (nameTitle) {
+          url += '/' + nameTitle;
+        }
+
+        if (nameSubtitle) {
+          url += '/' + nameSubtitle;
+        }
+
+        return url;
+        //return (selectMenu[0].url ?? '') + '/' + (selectSubMenu[0].url ?? '');
       }
     }
   },
