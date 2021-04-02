@@ -46,7 +46,7 @@
             <ion-button :color="element.name == active ? 'secondary' : 'primary'" 
                         :disabled="element.name == active"
                         @click="submenuOpen(element.name)"
-                        v-for="element in menu" 
+                        v-for="element in menus" 
                         :key="element.id"
             >
               <ion-icon v-if="element.sections"
@@ -75,7 +75,7 @@
           </ion-button>
         </div>
         <ion-col class="center">
-          <ion-button v-for="element in submenu" 
+          <ion-button v-for="element in submenus" 
                       :key="element" 
                       :color="element.name == active ? 'secondary' : 'dark'" 
                       :disabled="element.name == active"
@@ -127,10 +127,13 @@ export default defineComponent({
   },
   data() {
     return {
-      menu: [] as MenuCollection[],
-      submenu: [] as SubmenuCollection[],
+      menus: [] as MenuCollection[],
+      submenus: [] as SubmenuCollection[],
       isActiveSubmenu: this.activeSubmenu ? true : false,
-      menuSelected: ''
+      menuSelected: '',
+      breadCrumbs: {},
+      menuSelectedName: this.active ?? '',
+      submenuSelectedName: this.activeSubmenu ?? '',
     }
   },
   props: {
@@ -139,10 +142,11 @@ export default defineComponent({
       type: String,
       default: 'home'
     },
+    // Indica el elemento activo del submenu
     activeSubmenu: {
       type: String,
       default: ''
-    }
+    },
   },
   setup() {
     const isOpenRef = ref(false);
@@ -155,8 +159,9 @@ export default defineComponent({
   },
   beforeCreate() {
     new MainMenuService().getMenu().then((response) => {
-      this.menu = response;
+      this.menus = response;
     });
+
   },
 
   methods: {
@@ -164,7 +169,7 @@ export default defineComponent({
      * Cierra el submenú actual sea cual sea.
      */
     submenuClose() {
-      this.submenu = [];
+      this.submenus = [];
       this.isActiveSubmenu = false;
     },
 
@@ -172,11 +177,11 @@ export default defineComponent({
      * Abre el submenú para el menú pulsado.
      */
     submenuOpen(name: string) {
-      if (!name || !this.menu || !this.menu.length) {
+      if (!name || !this.menus || !this.menus.length) {
         return null;
       }
 
-      const selectMenu = this.menu.filter(ele => {
+      const selectMenu = this.menus.filter(ele => {
           return ele.name === name;
       });
 
@@ -194,26 +199,24 @@ export default defineComponent({
           url += '/' + nameTitle;
         }
 
-        console.log(url);
-
         window.location.href = url;
       } else if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections ) {
-        this.submenu = selectMenu[0].sections;
+        this.submenus = selectMenu[0].sections;
         this.isActiveSubmenu = true;
         this.menuSelected = name;
       }
     },
 
     getSubmenuUrl(nameSubmenu: string) {
-      if (!nameSubmenu || !this.submenu || !this.submenu.length) {
+      if (!nameSubmenu || !this.submenus || !this.submenus.length) {
         return null;
       }
 
-      const selectMenu = this.menu.filter(ele => {
+      const selectMenu = this.menus.filter(ele => {
         return ele.name === this.menuSelected;
       });
 
-      const selectSubMenu = this.submenu.filter(ele => {
+      const selectSubMenu = this.submenus.filter(ele => {
         return ele.name === nameSubmenu;
       });
 

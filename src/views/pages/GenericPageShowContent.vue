@@ -5,6 +5,7 @@
       <bread-crumb class="ion-hide-sm-down"></bread-crumb>
       
       <h1>Show Individual content</h1>
+      <h2>Slug</h2>
 
       <contents-grid></contents-grid>
       
@@ -14,6 +15,8 @@
 </template>
 
 <script lang="ts">
+//import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonContent } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -25,15 +28,16 @@ import ContentsGrid from '@/components/ContentsGrid.vue';
 export default defineComponent({
   name: 'GenericPageShowContent',
   components: {
+    IonContent,
     BreadCrumb,
     Navbar,
     FooterFull,
     ContentsGrid,
   },
   setup() {
-    return {
-      router: useRouter(),
-    }
+      // Devuelvo los parámetros que vienen por la ruta.
+      const route = useRouter();
+      return route.currentRoute.value.params;
   }
 });
 </script>
