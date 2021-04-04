@@ -1,11 +1,16 @@
 <template>
-  <ion-toolbar color="dark" class="background-transparent">
+  <ion-toolbar color="dark" 
+               class="background-transparent"
+               v-if="breadcrumbs && breadcrumbs.length > 1">
     <ion-buttons slot="start">
       <div class="breadcrumb">
-        <a class="breadcrumb__step" href="#">Ruta 1</a>
-        <a class="breadcrumb__step" href="#">Ruta 2</a>
-        <a class="breadcrumb__step" href="#">Ruta 3</a>
-        <a class="breadcrumb__step breadcrumb__step--active">Ruta 4 Activa</a>
+        <a :class="element.active ? 'breadcrumb__step breadcrumb__step--active' : 'breadcrumb__step'" 
+           href="#"
+           
+           v-for="element in breadcrumbs"
+           :key="element.name">
+           {{slugToTitle(element.name)}}
+        </a>
       </div>
     </ion-buttons>
 
@@ -17,8 +22,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { IonToolbar, IonButtons, IonBackButton } from '@ionic/vue';
+import { BreadCrumbInterface } from '../../interfaces/menu-interface';
 
 export default defineComponent({
   name: 'BreadCrumb',
@@ -26,6 +32,29 @@ export default defineComponent({
     IonToolbar,
     IonButtons,
     IonBackButton,
+  },
+  props: {
+    breadcrumbs: {
+      type: Array,
+      default: () => []
+    }
+  },
+  setup(props) {
+    console.log('Propiedades del bread: ', props.breadcrumbs);
+  },
+  methods: {
+    capitalize(text: string|null) {
+      
+      if (typeof text !== 'string') {
+        return '';
+      }
+      
+      return text.charAt(0).toUpperCase() + text.slice(1)
+    },
+
+    slugToTitle(slug: string) {
+      return this.capitalize(slug.trim().replaceAll('-', ' '));
+    }
   }
 });
 </script>

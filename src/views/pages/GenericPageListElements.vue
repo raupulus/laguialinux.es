@@ -3,7 +3,7 @@
             :activeSubmenu="params.subsection ?? ''"></navbar>
     
     <ion-content color="dark">
-      <bread-crumb class="ion-hide-sm-down"></bread-crumb>
+      <bread-crumb class="ion-hide-sm-down" :breadcrumbs="breadCrumbs"></bread-crumb>
       
       <h1>Page List</h1>
       <h2>slug: {{params.slug ?? ''}}</h2>
@@ -29,6 +29,8 @@ import BreadCrumb from '@/components/layouts/BreadCrumb.vue';
 import Navbar from '@/components/layouts/Navbar.vue';
 import FooterFull from '@/components/layouts/FooterFull.vue';
 import ContentsGrid from '@/components/ContentsGrid.vue';
+import { BreadCrumbInterface } from '../../interfaces/menu-interface';
+
 
 export default defineComponent({
   name: 'GenericPageListElements',
@@ -39,14 +41,12 @@ export default defineComponent({
     FooterFull,
     ContentsGrid,
   },
-  setup(props, context) {
+  setup() {
     
     //https://pablomagaz.com/blog/nueva-composition-api-vue-3
     
     onMounted(() => {
       console.log('Component mounted!');
-      console.log('Props: ', props);
-      console.log('Context: ', context);
     });
     
     onUpdated(() => {
@@ -61,23 +61,26 @@ export default defineComponent({
     const route = useRouter();
     const params = route.currentRoute.value.params;
 
-    console.log('Parámetros: ', params);
+    const breadCrumbs = [] as BreadCrumbInterface[];
+
+    if (params.subsection) {
+      breadCrumbs.push({name: params.subsection.toString()});
+    }
     
+    if (params.slug) {
+      breadCrumbs.push({
+        name: params.slug.toString(),
+        active: true
+      });
+    }
+
     return { 
       params,
-      breadcrumb: [
-        {
-          name: 'home'
-        },
-        {
-          name: 'route1'
-        },
-        {
-          name: 'route2',
-          active: true
-        }
-      ]
+      breadCrumbs: breadCrumbs
     };
+  },
+  beforeMount() {
+    console.log('antes de montar generic: ', this.breadCrumbs);
   }
 });
 </script>

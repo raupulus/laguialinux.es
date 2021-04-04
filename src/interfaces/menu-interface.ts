@@ -12,3 +12,8 @@ export interface SubmenuCollection {
     title: string;
     name: string;
 }
+
+export interface BreadCrumbInterface {
+    name: string;
+    active?: boolean | false;
+}

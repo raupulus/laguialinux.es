@@ -76,7 +76,7 @@
         </div>
         <ion-col class="center">
           <ion-button v-for="element in submenus" 
-                      :key="element" 
+                      :key="element.id" 
                       :color="element.name == active ? 'secondary' : 'dark'" 
                       :disabled="element.name == active"
                       :href="getSubmenuUrl(element.name)">
@@ -108,7 +108,7 @@ import {
 } from '@ionic/vue';
 
 // Interfaces
-import { MenuCollection, SubmenuCollection } from '@/interfaces/menu-interface';
+import { MenuCollection, SubmenuCollection, BreadCrumbInterface } from '@/interfaces/menu-interface';
 
 export default defineComponent({
   name: 'NavBar',
@@ -128,10 +128,11 @@ export default defineComponent({
   data() {
     return {
       menus: [] as MenuCollection[],
+      menuActive: {} as MenuCollection,
       submenus: [] as SubmenuCollection[],
+      submenuActive: {} as SubmenuCollection,
       isActiveSubmenu: this.activeSubmenu ? true : false,
-      menuSelected: '',
-      breadCrumbs: {},
+      breadCrumbs: [] as BreadCrumbInterface[],
       menuSelectedName: this.active ?? '',
       submenuSelectedName: this.activeSubmenu ?? '',
     }
@@ -160,6 +161,12 @@ export default defineComponent({
   beforeCreate() {
     new MainMenuService().getMenu().then((response) => {
       this.menus = response;
+
+      // Busco el menú activo.
+      this.searchMenuActive();
+
+      // Busco el submenú activo si lo hubiera.
+      this.searchSubmenuActive();
     });
 
   },
@@ -181,13 +188,13 @@ export default defineComponent({
         return null;
       }
 
-      const selectMenu = this.menus.filter(ele => {
-          return ele.name === name;
-      });
+      this.menuSelectedName = name;
+      const selectMenu = this.searchMenuActive();
 
-      if (selectMenu && selectMenu.length && selectMenu[0] && !selectMenu[0].sections) {
-        const group = selectMenu[0].group ?? null;
-        const nameTitle = selectMenu[0].name ?? null;
+      // En caso de un menú simple
+      if (selectMenu && !selectMenu.sections) {
+        const group = selectMenu.group ?? null;
+        const nameTitle = selectMenu.name ?? null;
 
         let url = '';
 
@@ -200,20 +207,66 @@ export default defineComponent({
         }
 
         window.location.href = url;
-      } else if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections ) {
-        this.submenus = selectMenu[0].sections;
+
+        // En caso de tener submenú
+      } else if (selectMenu && selectMenu.sections) {
+        this.searchSubmenuActive();
+        this.submenus = selectMenu.sections;
         this.isActiveSubmenu = true;
-        this.menuSelected = name;
       }
     },
 
+    /**
+     * Busca y establece el menú activo actual.
+     */
+    searchMenuActive() {
+      const menu = this.menus.filter(ele => {
+          return ele.name === this.menuSelectedName;
+      });
+
+      if (menu && menu.length && menu[0]) {
+        this.menuActive = menu[0];
+        this.menuSelectedName = menu[0].name;
+
+        return menu[0];
+      }
+
+      return null;
+    },
+
+    /**
+     * Busca y establece el submenú activo actual.
+     */
+    searchSubmenuActive() {
+      const menu = this.menuActive;
+
+      if (! menu.sections || ! menu.sections.length) {
+        return null;
+      }
+
+      const subMenu = menu.sections;
+
+      if (subMenu && subMenu.length && subMenu[0]) {
+        this.submenus = menu.sections;
+        this.submenuActive = subMenu[0];
+        this.submenuSelectedName = subMenu[0].name;
+
+        return subMenu[0];
+      }
+
+      return null;
+    },
+
+    /**
+     * Devuelve la url hacia un submenú.
+     */
     getSubmenuUrl(nameSubmenu: string) {
       if (!nameSubmenu || !this.submenus || !this.submenus.length) {
         return null;
       }
 
       const selectMenu = this.menus.filter(ele => {
-        return ele.name === this.menuSelected;
+        return ele.name === this.menuSelectedName;
       });
 
       const selectSubMenu = this.submenus.filter(ele => {
@@ -244,6 +297,10 @@ export default defineComponent({
         return url;
         //return (selectMenu[0].url ?? '') + '/' + (selectSubMenu[0].url ?? '');
       }
+    },
+
+    generateBreadCrumb() {
+      console.log('breadcrumb');
     }
   },
 });
