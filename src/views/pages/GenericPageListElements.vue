@@ -1,6 +1,6 @@
 <template>
     <navbar :active="params.subsection ?? params.slug" 
-            :activeSubmenu="params.subsection ?? ''"></navbar>
+            :activeSubmenu="params.slug ?? ''"></navbar>
     
     <ion-content color="dark">
       <!--
@@ -81,9 +81,6 @@ export default defineComponent({
       breadCrumbs: breadCrumbs
     };
   },
-  beforeMount() {
-    console.log('antes de montar generic: ', this.breadCrumbs);
-  }
 });
 </script>
 

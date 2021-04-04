@@ -75,10 +75,10 @@
           </ion-button>
         </div>
         <ion-col class="center">
-          <ion-button v-for="element in submenus" 
-                      :key="element.id" 
-                      :color="element.name == active ? 'secondary' : 'dark'" 
-                      :disabled="element.name == active"
+          <ion-button v-for="element in submenus"
+                      :key="element.id"
+                      :color="element.name == submenuSelectedName ? 'secondary' : 'dark'"
+                      :disabled="element.name == submenuSelectedName"
                       :href="getSubmenuUrl(element.name)">
             {{ element.title }}
           </ion-button>
@@ -246,10 +246,20 @@ export default defineComponent({
 
       const subMenu = menu.sections;
 
-      if (subMenu && subMenu.length && subMenu[0]) {
+      if (subMenu && subMenu.length) {
         this.submenus = menu.sections;
-        this.submenuActive = subMenu[0];
-        this.submenuSelectedName = subMenu[0].name;
+
+
+
+        const submenuActive = menu.sections.filter(ele => {
+          return ele.name === this.activeSubmenu;
+        });
+
+        if (submenuActive && submenuActive.length) {
+          this.submenuActive = submenuActive[0];
+          this.submenuSelectedName = submenuActive[0].name;
+          console.log(this.submenuActive);
+        }
 
         return subMenu[0];
       }
@@ -298,10 +308,6 @@ export default defineComponent({
         //return (selectMenu[0].url ?? '') + '/' + (selectSubMenu[0].url ?? '');
       }
     },
-
-    generateBreadCrumb() {
-      console.log('breadcrumb');
-    }
   },
 });
 </script>
