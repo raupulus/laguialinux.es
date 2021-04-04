@@ -3,8 +3,10 @@
             :activeSubmenu="params.subsection ?? ''"></navbar>
     
     <ion-content color="dark">
+      <!--
       <bread-crumb class="ion-hide-sm-down" :breadcrumbs="breadCrumbs"></bread-crumb>
-      
+      -->
+
       <h1>Page List</h1>
       <h2>slug: {{params.slug ?? ''}}</h2>
       <h2>subsección: {{params.subsection ?? ''}}</h2>
@@ -25,7 +27,7 @@ import { defineComponent } from 'vue';
 import { onMounted, onUpdated, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-import BreadCrumb from '@/components/layouts/BreadCrumb.vue';
+//import BreadCrumb from '@/components/layouts/BreadCrumb.vue';
 import Navbar from '@/components/layouts/Navbar.vue';
 import FooterFull from '@/components/layouts/FooterFull.vue';
 import ContentsGrid from '@/components/ContentsGrid.vue';
@@ -36,7 +38,7 @@ export default defineComponent({
   name: 'GenericPageListElements',
   components: {
     IonContent,
-    BreadCrumb,
+    //BreadCrumb,
     Navbar,
     FooterFull,
     ContentsGrid,

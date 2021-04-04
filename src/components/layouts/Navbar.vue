@@ -44,7 +44,7 @@
       <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
             <ion-button :color="element.name == active ? 'secondary' : 'primary'" 
-                        :disabled="element.name == active"
+                        :disabled="(element.name == active) && !element.sections"
                         @click="submenuOpen(element.name)"
                         v-for="element in menus" 
                         :key="element.id"
