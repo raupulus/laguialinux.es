@@ -43,7 +43,7 @@
 
       <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
-            <ion-button :color="element.name == active ? 'secondary' : 'primary'" 
+            <ion-button :color="element.name == active ? 'warning' : 'primary'" 
                         :disabled="(element.name == active) && !element.sections"
                         @click="submenuOpen(element.name)"
                         v-for="element in menus" 
@@ -77,7 +77,7 @@
         <ion-col class="center">
           <ion-button v-for="element in submenus"
                       :key="element.id"
-                      :color="element.name == submenuSelectedName ? 'secondary' : 'dark'"
+                      :color="element.name == submenuSelectedName ? 'warning' : 'dark'"
                       :disabled="element.name == submenuSelectedName"
                       :href="getSubmenuUrl(element.name)">
             {{ element.title }}
@@ -131,7 +131,7 @@ export default defineComponent({
       menuActive: {} as MenuCollection,
       submenus: [] as SubmenuCollection[],
       submenuActive: {} as SubmenuCollection,
-      isActiveSubmenu: this.activeSubmenu ? true : false,
+      isActiveSubmenu: (this.activeSubmenu && this.activeSubmenu.length) ? true : false,
       breadCrumbs: [] as BreadCrumbInterface[],
       menuSelectedName: this.active ?? '',
       submenuSelectedName: this.activeSubmenu ?? '',
@@ -162,11 +162,17 @@ export default defineComponent({
     new MainMenuService().getMenu().then((response) => {
       this.menus = response;
 
+      console.log('Título: ', this.active);
+      console.log('Submenú: ', this.activeSubmenu);
+
       // Busco el menú activo.
       this.searchMenuActive();
 
       // Busco el submenú activo si lo hubiera.
       this.searchSubmenuActive();
+
+      console.log('Título: ', this.active);
+      console.log('Submenú: ', this.activeSubmenu);
     });
 
   },
@@ -249,8 +255,6 @@ export default defineComponent({
       if (subMenu && subMenu.length) {
         this.submenus = menu.sections;
 
-
-
         const submenuActive = menu.sections.filter(ele => {
           return ele.name === this.activeSubmenu;
         });
@@ -258,7 +262,6 @@ export default defineComponent({
         if (submenuActive && submenuActive.length) {
           this.submenuActive = submenuActive[0];
           this.submenuSelectedName = submenuActive[0].name;
-          console.log(this.submenuActive);
         }
 
         return subMenu[0];

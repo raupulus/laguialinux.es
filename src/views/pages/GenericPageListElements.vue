@@ -1,6 +1,6 @@
 <template>
     <navbar :active="params.subsection ?? params.slug" 
-            :activeSubmenu="params.slug ?? ''"></navbar>
+            :activeSubmenu="(params.subsection && params.slug) ? params.slug : ''"></navbar>
     
     <ion-content color="dark">
       <!--
@@ -44,9 +44,6 @@ export default defineComponent({
     ContentsGrid,
   },
   setup() {
-    
-    //https://pablomagaz.com/blog/nueva-composition-api-vue-3
-    
     onMounted(() => {
       console.log('Component mounted!');
     });
@@ -65,7 +62,7 @@ export default defineComponent({
 
     const breadCrumbs = [] as BreadCrumbInterface[];
 
-    if (params.subsection) {
+    if (params.subsection && params.subsection.toString().length) {
       breadCrumbs.push({name: params.subsection.toString()});
     }
     
