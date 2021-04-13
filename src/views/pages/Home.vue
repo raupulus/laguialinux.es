@@ -1,6 +1,4 @@
 <template>
-    <navbar active="home"></navbar>
-    
     <ion-content color="dark">
       <ion-row class="center">
         <ion-col
@@ -95,14 +93,12 @@ import {
   IonImg,
 } from '@ionic/vue';
 
-import Navbar from '@/components/layouts/Navbar.vue';
 import FooterFull from '@/components/layouts/FooterFull.vue';
 import ContentsGrid from '@/components/ContentsGrid.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
-    Navbar,
     FooterFull,
     ContentsGrid,
     IonSlide, 

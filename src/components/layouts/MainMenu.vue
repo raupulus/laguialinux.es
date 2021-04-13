@@ -6,20 +6,22 @@
         <ion-title>(Logo) La Guía Linux</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>Inicio</ion-item>
-        <ion-item>Guías</ion-item>
-        <ion-item>Noticias</ion-item>
-        <ion-item>Apps</ion-item>
-        <ion-item>Contacto</ion-item>
-        <ion-item>Videotutoriales</ion-item>
-        <ion-item>Distribuciones</ion-item>
-        <ion-item>Juegos</ion-item>
-        <ion-item>Enlaces Amigos</ion-item>
-        <ion-item>About</ion-item>
-      </ion-list>
-    </ion-content>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item>Inicio</ion-item>
+          <ion-item>Guías</ion-item>
+          <ion-item>Noticias</ion-item>
+          <ion-item>Apps</ion-item>
+          <ion-item>Contacto</ion-item>
+          <ion-item>Videotutoriales</ion-item>
+          <ion-item>Distribuciones</ion-item>
+          <ion-item>Juegos</ion-item>
+          <ion-item>Enlaces Amigos</ion-item>
+          <ion-item>About</ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
   </ion-menu>
 
   <ion-router-outlet id="main"></ion-router-outlet>
@@ -32,7 +34,6 @@
 
 <script>
 import { 
-  IonContent, 
   IonHeader, 
   IonItem, 
   IonList, 
@@ -40,7 +41,9 @@ import {
   IonRouterOutlet,
   IonTitle, 
   IonToolbar,
-  menuController
+  menuController,
+  IonCol,
+  IonRow
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
@@ -48,14 +51,15 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'MainMenu',
   components: {
-    IonContent, 
     IonHeader, 
     IonItem, 
     IonList, 
     IonMenu, 
     IonRouterOutlet,
     IonTitle, 
-    IonToolbar
+    IonToolbar,
+    IonCol,
+    IonRow
   },
   methods: {
     openCustom() {
