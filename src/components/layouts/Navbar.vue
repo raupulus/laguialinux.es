@@ -45,7 +45,7 @@
         <ion-col class="center">
             <ion-button :color="element.name == menuSelectedName ? 'warning' : 'primary'" 
                         :disabled="(element.name == menuSelectedName) && !element.sections"
-                        @click="submenuOpen(element.name)"
+                        @click="!element.sections ? navigateTo(element.name) : subMenuOpen(element.name)"
                         v-for="element in menus" 
                         :key="element.id"
             >
@@ -59,12 +59,12 @@
 
     </ion-toolbar>
 
-    <ion-toolbar v-show="isActiveSubmenu"
+    <ion-toolbar v-show="isOpenRef"
                  color="primary" 
                  class="ion-hide-sm-down center">
       <ion-row>
         <div>
-          <ion-button color="dark" @click="submenuClose()" class="closeMenu">
+          <ion-button color="dark" @click="subMenuClose()" class="closeMenu">
             <ion-icon slot="icon-only"
                       size="large"
                       color="warning"
@@ -78,8 +78,8 @@
         <ion-col class="center">
           <ion-button v-for="element in submenus"
                       :key="element.id"
-                      :color="element.name == submenuSelectedName ? 'warning' : 'dark'"
-                      :disabled="element.name == submenuSelectedName"
+                      :color="element.name == subMenuSelectedName ? 'warning' : 'dark'"
+                      :disabled="element.name == subMenuSelectedName"
                       @click="router.push(getSubmenuUrl(element.name))">
             {{ element.title }}
           </ion-button>
@@ -91,7 +91,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { MainMenuService } from '@/services/main-menu-service';
 import { caretDownOutline, closeCircleOutline } from 'ionicons/icons';
 import { 
@@ -130,8 +130,6 @@ export default defineComponent({
   },
   data() {
     return {
-      menus: [] as MenuCollection[],
-      menuActive: {} as MenuCollection,
       submenus: [] as SubmenuCollection[],
       submenuActive: {} as SubmenuCollection,
       breadCrumbs: [] as BreadCrumbInterface[],
@@ -141,57 +139,232 @@ export default defineComponent({
     const isOpenRef = ref(false);
     const event = ref();
 
-    const setOpen = (state: boolean /*, event?: Event */) => {
-      //event.value = event; 
+    const setOpen = (state: boolean, newEvent?: Event) => {
+      event.value = newEvent; 
       isOpenRef.value = state;
     }
 
-    const route = useRoute();
     const router = useRouter();
-    const params = route.params;
+    const route = useRoute();
+    const params = ref(route.params);
+    const slug = ref();
+    const subsection = ref();
+
+    const menuSelectedName = ref(route.params.slug as string|string[]);
+    const subMenuSelectedName = ref(route.params.slug as string|string[]);
+    const menus = ref([] as MenuCollection[]);
+    const menuActive = ref({} as MenuCollection);
+
+     
+    /**
+     * Busca y establece el menú activo actual.
+     */
+    const searchMenuActive = () => {
+
+      if (menus.value) {
+        const menu = menus.value.filter(ele => {
+          return ele.name === menuSelectedName.value;
+        });
+
+        console.log(menu);
+
+        if (menu && menu.length && menu[0] && menu[0].name) {
+          menuActive.value = menu[0];
+          menuSelectedName.value = menu[0].name;
+
+          return menu[0];
+        }
+      }
+
+      return [];
+    };
+
+    const searchSubMenuActive = () => {
+      //
+    };
+
+    /**
+     * Vuelve a actualizar los datos para los menús por completo descargando
+     * de la API si fuera necesario.
+     */
+    const updateMenus = () => {
+      new MainMenuService().getMenu().then((response) => {
+      menus.value = response;
+
+      // Busco el menú activo.
+      searchMenuActive();
+
+      // Busco el submenú activo si lo hubiera.
+      searchSubMenuActive();
+    });
+    }
+
+    const updateSubmenus = () => {
+      menuSelectedName.value = route.params.slug,
+      subMenuSelectedName.value = route.params.subsection;
+      
+      searchMenuActive();
+      menuActive.value = searchMenuActive() as MenuCollection;
+
+      console.log('Menú Seleccionado: ' + menuSelectedName.value);
+      console.log('Submenú Seleccionado: ' + subMenuSelectedName.value);
+    };
+
+    const updateComponent = () => {
+      slug.value = route.params.slug;
+      subsection.value = route.params.subsection;
+      params.value = route.params;
+      
+
+      // Busca y actualiza los menús.
+      updateMenus();
+
+      // Busca y actualiza los submenús.
+      updateSubmenus();
+
+
+
+      //console.log('Nuevo Slug: ' + params.value.slug);
+      //console.log('Nueva Subseccion: ' + params.value.subsection);
+
+      // TODO → Preparar ajax para obtener datos.
+    };
+
+    onBeforeMount(() => {
+      //
+    });
+    onMounted(() => updateComponent());
+
+    watch(useRoute(), () => {
+      updateComponent();
+    });
+
 
     return { 
+      route,
+      router, 
+      params,
+      slug,
+      subsection: subsection,
       isOpenRef, 
       setOpen, 
       event, 
       caretDownOutline, 
       closeCircleOutline,
-      route: route,
-      router: router, 
-      params: params,
-      menuSelectedName: params.slug ?? '/',
-      submenuSelectedName: params.subsection ?? '',
-      activeSubmenu: '',
-      isActiveSubmenu: (params.subsection && params.subsection.length) ? true : false,
+      menuSelectedName,
+      subMenuSelectedName,
+      menus,
+      menuActive
     }
   },
-  beforeCreate() {
-    new MainMenuService().getMenu().then((response) => {
-      this.menus = response;
 
-      // Busco el menú activo.
-      this.searchMenuActive();
-
-      // Busco el submenú activo si lo hubiera.
-      this.searchSubmenuActive();
-    });
-  },
   beforeUpdate() {
     console.log('Before Updated');
   },
 
   methods: {
+    generateSubMenuLink() {
+      //
+    },
+
+    generateLink() {
+      //
+
+    },
+    
+    navigateTo(slug: string) {
+      this.router.push(slug);
+    },
+
+
+    searchSubMenuActive() {
+      //
+      return 'benchmarks';
+    },
+
     /**
      * Cierra el submenú actual sea cual sea.
      */
-    submenuClose() {
-      this.submenus = [];
-      this.isActiveSubmenu = false;
+    subMenuClose() {
+      async () => this.isOpenRef = false;
+      async () => this.submenus = [];
     },
+
+    subMenuOpen(name: string) {
+      if (!name || !this.menus || !this.menus.length) {
+        return null;
+      }
+
+      /*
+      this.menuSelectedName = name;
+      const selectMenu = this.searchMenuActive();
+
+      // En caso de un menú simple
+      if (selectMenu && !selectMenu.sections) {
+        const group = selectMenu.group ?? null;
+        const nameTitle = selectMenu.name ?? null;
+
+        let url = '';
+
+        if (group) {
+          url += '/' + group;
+        }
+
+        if (nameTitle) {
+          url += '/' + nameTitle;
+        }
+
+        this.submenuActive = {} as SubmenuCollection;
+        this.submenuSelectedName = '';
+
+        this.subMenuClose();
+
+        //window.location.href = url;
+        this.router.push(url);
+        console.log('Se navega a la url: ' + url);
+
+        // En caso de tener submenú
+      } else if (selectMenu && selectMenu.sections) {
+        this.searchSubMenuActive();
+        this.submenus = selectMenu.sections;
+        this.isActiveSubmenu = true;
+      }
+
+      */
+    },
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     /**
      * Abre el submenú para el menú pulsado.
      */
+    /*
     submenuOpen(name: string) {
       if (!name || !this.menus || !this.menus.length) {
         return null;
@@ -232,27 +405,12 @@ export default defineComponent({
       }
     },
 
-    /**
-     * Busca y establece el menú activo actual.
-     */
-    searchMenuActive() {
-      const menu = this.menus.filter(ele => {
-          return ele.name === this.menuSelectedName;
-      });
-
-      if (menu && menu.length && menu[0]) {
-        this.menuActive = menu[0];
-        this.menuSelectedName = menu[0].name;
-
-        return menu[0];
-      }
-
-      return null;
-    },
+    
 
     /**
      * Busca y establece el submenú activo actual.
      */
+    /*
     searchSubmenuActive() {
       const menu = this.menuActive;
 
@@ -279,10 +437,12 @@ export default defineComponent({
 
       return null;
     },
+    */
 
     /**
      * Devuelve la url hacia un submenú.
      */
+    /*
     getSubmenuUrl(nameSubmenu: string) {
       if (!nameSubmenu || !this.submenus || !this.submenus.length) {
         return null;
@@ -322,6 +482,8 @@ export default defineComponent({
       }
     },
   },
+  */
+  }
 });
 </script>
 

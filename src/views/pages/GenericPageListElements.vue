@@ -47,7 +47,6 @@ import {
 
 } from '@ionic/vue';
 import { onMounted, ref, watch, } from 'vue';
-//import { watch, onUpdated, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 export default({
@@ -73,8 +72,6 @@ export default({
     const slug = ref();
     const subsection = ref();
 
-    //https://pastebin.com/j2SCvABn
-
     const updateData = () => {
       slug.value = route.params.slug;
       subsection.value = route.params.subsection;
@@ -82,7 +79,7 @@ export default({
       //console.log('Nueva Subseccion: ' + params.value.subsection);
 
       // TODO → Preparar ajax para obtener datos.
-      
+
       return params;
     };
 
