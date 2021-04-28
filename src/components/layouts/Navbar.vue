@@ -43,8 +43,8 @@
 
       <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
-            <ion-button :color="element.name == active ? 'warning' : 'primary'" 
-                        :disabled="(element.name == active) && !element.sections"
+            <ion-button :color="element.name == menuSelectedName ? 'warning' : 'primary'" 
+                        :disabled="(element.name == menuSelectedName) && !element.sections"
                         @click="submenuOpen(element.name)"
                         v-for="element in menus" 
                         :key="element.id"
@@ -74,12 +74,13 @@
                       :icon="closeCircleOutline"></ion-icon>
           </ion-button>
         </div>
+        
         <ion-col class="center">
           <ion-button v-for="element in submenus"
                       :key="element.id"
                       :color="element.name == submenuSelectedName ? 'warning' : 'dark'"
                       :disabled="element.name == submenuSelectedName"
-                      :href="getSubmenuUrl(element.name)">
+                      @click="router.push(getSubmenuUrl(element.name))">
             {{ element.title }}
           </ion-button>
         </ion-col>
@@ -110,6 +111,8 @@ import {
 // Interfaces
 import { MenuCollection, SubmenuCollection, BreadCrumbInterface } from '@/interfaces/menu-interface';
 
+import { useRoute, useRouter } from 'vue-router';
+
 export default defineComponent({
   name: 'NavBar',
   components: {
@@ -131,50 +134,50 @@ export default defineComponent({
       menuActive: {} as MenuCollection,
       submenus: [] as SubmenuCollection[],
       submenuActive: {} as SubmenuCollection,
-      isActiveSubmenu: (this.activeSubmenu && this.activeSubmenu.length) ? true : false,
       breadCrumbs: [] as BreadCrumbInterface[],
-      menuSelectedName: this.active ?? '',
-      submenuSelectedName: this.activeSubmenu ?? '',
     }
-  },
-  props: {
-    // Indica el elemento activo en el navbar
-    active: {
-      type: String,
-      default: 'home'
-    },
-    // Indica el elemento activo del submenu
-    activeSubmenu: {
-      type: String,
-      default: ''
-    },
   },
   setup() {
     const isOpenRef = ref(false);
     const event = ref();
+
     const setOpen = (state: boolean /*, event?: Event */) => {
       //event.value = event; 
       isOpenRef.value = state;
     }
-    return { isOpenRef, setOpen, event, caretDownOutline, closeCircleOutline}
+
+    const route = useRoute();
+    const router = useRouter();
+    const params = route.params;
+
+    return { 
+      isOpenRef, 
+      setOpen, 
+      event, 
+      caretDownOutline, 
+      closeCircleOutline,
+      route: route,
+      router: router, 
+      params: params,
+      menuSelectedName: params.slug ?? '/',
+      submenuSelectedName: params.subsection ?? '',
+      activeSubmenu: '',
+      isActiveSubmenu: (params.subsection && params.subsection.length) ? true : false,
+    }
   },
   beforeCreate() {
     new MainMenuService().getMenu().then((response) => {
       this.menus = response;
-
-      console.log('Título: ', this.active);
-      console.log('Submenú: ', this.activeSubmenu);
 
       // Busco el menú activo.
       this.searchMenuActive();
 
       // Busco el submenú activo si lo hubiera.
       this.searchSubmenuActive();
-
-      console.log('Título: ', this.active);
-      console.log('Submenú: ', this.activeSubmenu);
     });
-
+  },
+  beforeUpdate() {
+    console.log('Before Updated');
   },
 
   methods: {
@@ -212,7 +215,14 @@ export default defineComponent({
           url += '/' + nameTitle;
         }
 
-        window.location.href = url;
+        this.submenuActive = {} as SubmenuCollection;
+        this.submenuSelectedName = '';
+
+        this.submenuClose();
+
+        //window.location.href = url;
+        this.router.push(url);
+        console.log('Se navega a la url: ' + url);
 
         // En caso de tener submenú
       } else if (selectMenu && selectMenu.sections) {

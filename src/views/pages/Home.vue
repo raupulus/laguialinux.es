@@ -1,80 +1,84 @@
 <template>
-    <ion-content color="dark">
-      <ion-row class="center">
-        <ion-col
-          size-sm="12"
-          offset-sm="0"
-          size-lg="10"
-          offset-lg="1"
-          size-xl="8"
-          offset-xl="2">
+    <ion-page>
+      <navbarnew></navbarnew>
 
-          <ion-slides pager="true" :options="slideOpts" scrollbar="true">
-            <ion-slide>
-              <ion-img src="/img/slides/main/slide1.png"></ion-img>
-            </ion-slide>
-            <ion-slide>
-              <ion-img src="/img/slides/main/slide2.png"></ion-img>
-            </ion-slide>
-            <ion-slide>
-              <ion-img src="/img/slides/main/slide3.png"></ion-img>
-            </ion-slide>
-          </ion-slides>
-        </ion-col>
-      </ion-row>
+      <ion-content color="dark">
+        <ion-row class="center">
+          <ion-col
+            size-sm="12"
+            offset-sm="0"
+            size-lg="10"
+            offset-lg="1"
+            size-xl="8"
+            offset-xl="2">
 
-      <ion-row>
-        <ion-col size="12"
-          size-lg="10" 
-          offset-lg="1" 
-          size-xl="8" 
-          offset-xl="2">
-          <ion-row>
-            <ion-col size-sm="12"
-              size-md="6"
-              size-lg="4"
-              size-xl="4">
-              <ion-card>
-                <ion-card-header>
-                  <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
-                  <ion-card-title>Vídeotutoriales Youtube</ion-card-title>
-                </ion-card-header>
-              </ion-card>
+            <ion-slides pager="true" :options="slideOpts" scrollbar="true">
+              <ion-slide>
+                <ion-img src="/img/slides/main/slide1.png"></ion-img>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="/img/slides/main/slide2.png"></ion-img>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="/img/slides/main/slide3.png"></ion-img>
+              </ion-slide>
+            </ion-slides>
+          </ion-col>
+        </ion-row>
 
-            </ion-col>
+        <ion-row>
+          <ion-col size="12"
+            size-lg="10" 
+            offset-lg="1" 
+            size-xl="8" 
+            offset-xl="2">
+            <ion-row>
+              <ion-col size-sm="12"
+                size-md="6"
+                size-lg="4"
+                size-xl="4">
+                <ion-card>
+                  <ion-card-header>
+                    <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
+                    <ion-card-title>Vídeotutoriales Youtube</ion-card-title>
+                  </ion-card-header>
+                </ion-card>
 
-            <ion-col size="12"
-              size-md="6"
-              size-lg="4" 
-              size-xl="4">
-              <ion-card>
-                <ion-card-header>
-                  <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
-                  <ion-card-title>Entradas para iniciarse a Linux</ion-card-title>
-                </ion-card-header>
-              </ion-card>
-            </ion-col>
+              </ion-col>
 
-            <ion-col size="12"
-              size-md="6"
-              size-lg="4" 
-              size-xl="4">
-              <ion-card>
-                <ion-card-header>
-                  <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
-                  <ion-card-title>Contribuidores al sitio WEB</ion-card-title>
-                </ion-card-header>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
+              <ion-col size="12"
+                size-md="6"
+                size-lg="4" 
+                size-xl="4">
+                <ion-card>
+                  <ion-card-header>
+                    <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
+                    <ion-card-title>Entradas para iniciarse a Linux</ion-card-title>
+                  </ion-card-header>
+                </ion-card>
+              </ion-col>
 
-      <contents-grid></contents-grid>
-      
-    </ion-content>
+              <ion-col size="12"
+                size-md="6"
+                size-lg="4" 
+                size-xl="4">
+                <ion-card>
+                  <ion-card-header>
+                    <ion-img src="https://laguialinux.es/images/Miniaturas-Pagina-Principal/La-Guia-Linux-en-Youtube.jpg"></ion-img>
+                    <ion-card-title>Contribuidores al sitio WEB</ion-card-title>
+                  </ion-card-header>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
 
-    <footer-full></footer-full>
+        <contents-grid></contents-grid>
+        
+      </ion-content>
+
+      <footer-full></footer-full>
+    </ion-page>  
 </template>
 
 <script lang="ts">
@@ -91,10 +95,12 @@ import {
   IonCardTitle,
   IonCardHeader,
   IonImg,
+  IonPage
 } from '@ionic/vue';
 
 import FooterFull from '@/components/layouts/FooterFull.vue';
 import ContentsGrid from '@/components/ContentsGrid.vue';
+import Navbarnew from '@/components/layouts/NavbarNew.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -110,6 +116,8 @@ export default defineComponent({
     IonCardTitle,
     IonCardHeader,
     IonImg,
+    Navbarnew,
+    IonPage
   },
   setup() {
     const slideOpts = {

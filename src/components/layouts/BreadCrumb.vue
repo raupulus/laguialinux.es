@@ -22,9 +22,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent } from 'vue';
 import { IonToolbar, IonButtons, IonBackButton } from '@ionic/vue';
-import { BreadCrumbInterface } from '../../interfaces/menu-interface';
+//import { BreadCrumbInterface } from '../../interfaces/menu-interface';
 
 export default defineComponent({
   name: 'BreadCrumb',

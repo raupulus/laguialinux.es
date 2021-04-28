@@ -1,48 +1,103 @@
 <template>
-    
-    <ion-row color="dark">
-      <ion-col>
-        <!--
-        <bread-crumb class="ion-hide-sm-down" :breadcrumbs="breadCrumbs"></bread-crumb>
-        -->
+    <ion-page>
+      <ion-content>
+        <ion-row>
+          <ion-col>
+            <!--
+            <bread-crumb class="ion-hide-sm-down" :breadcrumbs="breadCrumbs"></bread-crumb>
+            -->
 
-        <h1>Page List</h1>
-        <h2>slug: {{params.slug ?? ''}}</h2>
-        <h2>subsección: {{params.subsection ?? ''}}</h2>
 
-        <contents-grid></contents-grid>
-      </ion-col>
-      
-    </ion-row>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
 
-    <footer-full></footer-full>
+            <h1>Page List</h1>
+            <h2>slug: {{slug ?? ''}}</h2>
+            <h2>subsección: {{subsection ?? ''}}</h2>
+
+            {{Math.random()}}
+            <contents-grid></contents-grid>
+          </ion-col>
+          
+        </ion-row>
+      </ion-content>
+    </ion-page>
 </template>
 
 <script lang="ts">
-//import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { defineComponent } from 'vue';
-
 //import BreadCrumb from '@/components/layouts/BreadCrumb.vue';
-import FooterFull from '@/components/layouts/FooterFull.vue';
 import ContentsGrid from '@/components/ContentsGrid.vue';
 
 import { 
   IonCol, 
-  IonRow
-} from '@ionic/vue';
+  IonRow,
+  IonContent,
+  IonPage,
 
-export default defineComponent({
+} from '@ionic/vue';
+import { onMounted, ref, watch, } from 'vue';
+//import { watch, onUpdated, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+export default({
   name: 'GenericPageListElements',
   components: {
-    FooterFull,
     ContentsGrid,
+    IonContent,
     IonCol, 
-    IonRow
+    IonRow,
+    IonPage,
   },
+  /*
+  data() {
+    return {
+      subsection: ''
+    }
+  },
+  */
+  setup() {
+    const route = useRoute();
+    const params = ref(route.params);
+    //const slug = computed(() => params.value.slug);
+    const slug = ref();
+    const subsection = ref();
 
-  inject: [
-    'params'
-  ],
+    //https://pastebin.com/j2SCvABn
+
+    const updateData = () => {
+      slug.value = route.params.slug;
+      subsection.value = route.params.subsection;
+      //console.log('Nuevo Slug: ' + params.value.slug);
+      //console.log('Nueva Subseccion: ' + params.value.subsection);
+
+      // TODO → Preparar ajax para obtener datos.
+      
+      return params;
+    };
+
+    onMounted(() => updateData());
+
+    watch(useRoute(), () => {
+      updateData();
+    })
+
+    return {
+      params: params,
+      slug: slug,
+      subsection: subsection,
+    };
+  },
 });
 </script>
 
