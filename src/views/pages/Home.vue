@@ -1,7 +1,5 @@
 <template>
     <ion-page>
-      <navbarnew></navbarnew>
-
       <ion-content color="dark">
         <ion-row class="center">
           <ion-col
@@ -76,8 +74,6 @@
         <contents-grid></contents-grid>
         
       </ion-content>
-
-      <footer-full></footer-full>
     </ion-page>  
 </template>
 
@@ -98,14 +94,11 @@ import {
   IonPage
 } from '@ionic/vue';
 
-import FooterFull from '@/components/layouts/FooterFull.vue';
 import ContentsGrid from '@/components/ContentsGrid.vue';
-import Navbarnew from '@/components/layouts/NavbarNew.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
-    FooterFull,
     ContentsGrid,
     IonSlide, 
     IonSlides, 
@@ -116,9 +109,9 @@ export default defineComponent({
     IonCardTitle,
     IonCardHeader,
     IonImg,
-    Navbarnew,
     IonPage
   },
+  props: ['forceSlug'],
   setup() {
     const slideOpts = {
       initialSlide: 1,
