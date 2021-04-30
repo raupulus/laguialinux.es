@@ -222,7 +222,7 @@ export default defineComponent({
     }
 
     const updateComponent = () => {
-      slug.value = route.params.slug;
+      slug.value = route.params.slug ?? (route.path && route.path.replaceAll('/', '') ? route.path.replaceAll('/', '') : 'home');
       subsection.value = route.params.subsection;
       params.value = route.params;
       menuSelectedName.value = (slug.value && subsection.value) ? subsection.value : slug.value ?? '/',
