@@ -43,9 +43,9 @@
 
       <ion-row class="ion-hide-sm-down">
         <ion-col class="center">
-            <ion-button :color="element.name == menuSelectedName ? 'warning' : 'primary'" 
-                        :disabled="(element.name == menuSelectedName) && !element.sections"
-                        @click="!element.sections ? navigateTo(element.name) : subMenuOpen(element.name)"
+            <ion-button :color="(element.name == slug) || (element.name == subsection) ? 'warning' : 'primary'" 
+                        :disabled="(element.name == slug) && !element.sections"
+                        @click="!element.sections ? navigateTo(generateLink(element.name, element.group)) : subMenuOpen(element.name)"
                         v-for="element in menus" 
                         :key="element.id"
             >
@@ -76,11 +76,11 @@
         </div>
         
         <ion-col class="center">
-          <ion-button v-for="element in submenus"
+          <ion-button v-for="element in subMenus"
                       :key="element.id"
                       :color="element.name == subMenuSelectedName ? 'warning' : 'dark'"
                       :disabled="element.name == subMenuSelectedName"
-                      @click="router.push(getSubmenuUrl(element.name))">
+                      @click="() => navigateTo(generateSubmenuLink(element.name, element.group))">
             {{ element.title }}
           </ion-button>
         </ion-col>
@@ -91,7 +91,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, onMounted, ref, watch } from 'vue';
+import { defineComponent, onBeforeMount, ref, watch } from 'vue';
 import { MainMenuService } from '@/services/main-menu-service';
 import { caretDownOutline, closeCircleOutline } from 'ionicons/icons';
 import { 
@@ -130,8 +130,7 @@ export default defineComponent({
   },
   data() {
     return {
-      submenus: [] as SubmenuCollection[],
-      submenuActive: {} as SubmenuCollection,
+      
       breadCrumbs: [] as BreadCrumbInterface[],
     }
   },
@@ -150,27 +149,52 @@ export default defineComponent({
     const slug = ref();
     const subsection = ref();
 
-    const menuSelectedName = ref(route.params.slug as string|string[]);
-    const subMenuSelectedName = ref(route.params.slug as string|string[]);
+    const menuSelectedName = ref((route.params.slug && route.params.subsection) ? route.params.subsection : route.params.slug as string);
     const menus = ref([] as MenuCollection[]);
     const menuActive = ref({} as MenuCollection);
 
+    const subMenuSelectedName = ref((route.params.slug && route.params.subsection) ? route.params.slug : '' as string);
+    const subMenus = ref([] as SubmenuCollection[]);
+    const subMenuActive = ref({} as SubmenuCollection|null);
+
+    const searchSubMenuActive = () => {
+      const menu = menuActive.value;
+      
+      if (! menu || ! menu.sections || ! menu.sections.length) {
+        return null;
+      }
+
+      subMenus.value = menu.sections ?? [];
+
+      if (subMenus.value && subMenus.value.length) {
+        const newSubMenuActive = subMenus.value.filter(ele => {
+          return ele.name === subMenuSelectedName.value;
+        });
+
+        if (newSubMenuActive && newSubMenuActive.length) {
+          subMenuActive.value = newSubMenuActive[0];
+        }
+
+        return newSubMenuActive[0];
+      }
+
+      return null;
+    };
      
     /**
      * Busca y establece el menú activo actual.
      */
     const searchMenuActive = () => {
-
-      if (menus.value) {
+      if (menus.value && menus.value.length) {
         const menu = menus.value.filter(ele => {
           return ele.name === menuSelectedName.value;
         });
 
-        console.log(menu);
-
         if (menu && menu.length && menu[0] && menu[0].name) {
           menuActive.value = menu[0];
           menuSelectedName.value = menu[0].name;
+
+          searchSubMenuActive();
 
           return menu[0];
         }
@@ -179,282 +203,56 @@ export default defineComponent({
       return [];
     };
 
-    const searchSubMenuActive = () => {
-      //
+    /**
+     * Lleva a la página recibida.
+     */
+    const navigateTo = (path: string) => {
+      router.push(path);
     };
 
     /**
      * Vuelve a actualizar los datos para los menús por completo descargando
      * de la API si fuera necesario.
      */
-    const updateMenus = () => {
+    const getMenus = () => {
       new MainMenuService().getMenu().then((response) => {
-      menus.value = response;
-
-      // Busco el menú activo.
-      searchMenuActive();
-
-      // Busco el submenú activo si lo hubiera.
-      searchSubMenuActive();
-    });
+        menus.value = response;
+        searchMenuActive();
+      });
     }
-
-    const updateSubmenus = () => {
-      menuSelectedName.value = route.params.slug,
-      subMenuSelectedName.value = route.params.subsection;
-      
-      searchMenuActive();
-      menuActive.value = searchMenuActive() as MenuCollection;
-
-      console.log('Menú Seleccionado: ' + menuSelectedName.value);
-      console.log('Submenú Seleccionado: ' + subMenuSelectedName.value);
-    };
 
     const updateComponent = () => {
       slug.value = route.params.slug;
       subsection.value = route.params.subsection;
       params.value = route.params;
-      
+      menuSelectedName.value = (slug.value && subsection.value) ? subsection.value : slug.value ?? '/',
+      subMenuSelectedName.value = (slug.value && subsection.value) ? slug.value : '';
+      isOpenRef.value = (slug.value && subsection.value) ? true : false;
 
-      // Busca y actualiza los menús.
-      updateMenus();
-
-      // Busca y actualiza los submenús.
-      updateSubmenus();
-
-
-
-      //console.log('Nuevo Slug: ' + params.value.slug);
-      //console.log('Nueva Subseccion: ' + params.value.subsection);
-
-      // TODO → Preparar ajax para obtener datos.
+      // Busca y actualiza los menús y submenús.
+      searchMenuActive();
     };
 
-    onBeforeMount(() => {
-      //
-    });
-    onMounted(() => updateComponent());
-
-    watch(useRoute(), () => {
-      updateComponent();
-    });
-
-
-    return { 
-      route,
-      router, 
-      params,
-      slug,
-      subsection: subsection,
-      isOpenRef, 
-      setOpen, 
-      event, 
-      caretDownOutline, 
-      closeCircleOutline,
-      menuSelectedName,
-      subMenuSelectedName,
-      menus,
-      menuActive
+    const subMenuClose = () => {
+      isOpenRef.value = false;
+      subMenus.value = [] as SubmenuCollection[];
+      subMenuActive.value = {} as SubmenuCollection;
+      subMenuSelectedName.value = '';
     }
-  },
 
-  beforeUpdate() {
-    console.log('Before Updated');
-  },
+    const generateSubmenuLink = (nameSubmenu: string) => {
 
-  methods: {
-    generateSubMenuLink() {
-      //
-    },
-
-    generateLink() {
-      //
-
-    },
-    
-    navigateTo(slug: string) {
-      this.router.push(slug);
-    },
-
-
-    searchSubMenuActive() {
-      //
-      return 'benchmarks';
-    },
-
-    /**
-     * Cierra el submenú actual sea cual sea.
-     */
-    subMenuClose() {
-      async () => this.isOpenRef = false;
-      async () => this.submenus = [];
-    },
-
-    subMenuOpen(name: string) {
-      if (!name || !this.menus || !this.menus.length) {
+      if ( ! nameSubmenu) {
         return null;
       }
 
-      /*
-      this.menuSelectedName = name;
-      const selectMenu = this.searchMenuActive();
-
-      // En caso de un menú simple
-      if (selectMenu && !selectMenu.sections) {
-        const group = selectMenu.group ?? null;
-        const nameTitle = selectMenu.name ?? null;
-
-        let url = '';
-
-        if (group) {
-          url += '/' + group;
-        }
-
-        if (nameTitle) {
-          url += '/' + nameTitle;
-        }
-
-        this.submenuActive = {} as SubmenuCollection;
-        this.submenuSelectedName = '';
-
-        this.subMenuClose();
-
-        //window.location.href = url;
-        this.router.push(url);
-        console.log('Se navega a la url: ' + url);
-
-        // En caso de tener submenú
-      } else if (selectMenu && selectMenu.sections) {
-        this.searchSubMenuActive();
-        this.submenus = selectMenu.sections;
-        this.isActiveSubmenu = true;
-      }
-
-      */
-    },
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    /**
-     * Abre el submenú para el menú pulsado.
-     */
-    /*
-    submenuOpen(name: string) {
-      if (!name || !this.menus || !this.menus.length) {
-        return null;
-      }
-
-      this.menuSelectedName = name;
-      const selectMenu = this.searchMenuActive();
-
-      // En caso de un menú simple
-      if (selectMenu && !selectMenu.sections) {
-        const group = selectMenu.group ?? null;
-        const nameTitle = selectMenu.name ?? null;
-
-        let url = '';
-
-        if (group) {
-          url += '/' + group;
-        }
-
-        if (nameTitle) {
-          url += '/' + nameTitle;
-        }
-
-        this.submenuActive = {} as SubmenuCollection;
-        this.submenuSelectedName = '';
-
-        this.submenuClose();
-
-        //window.location.href = url;
-        this.router.push(url);
-        console.log('Se navega a la url: ' + url);
-
-        // En caso de tener submenú
-      } else if (selectMenu && selectMenu.sections) {
-        this.searchSubmenuActive();
-        this.submenus = selectMenu.sections;
-        this.isActiveSubmenu = true;
-      }
-    },
-
-    
-
-    /**
-     * Busca y establece el submenú activo actual.
-     */
-    /*
-    searchSubmenuActive() {
-      const menu = this.menuActive;
-
-      if (! menu.sections || ! menu.sections.length) {
-        return null;
-      }
-
-      const subMenu = menu.sections;
-
-      if (subMenu && subMenu.length) {
-        this.submenus = menu.sections;
-
-        const submenuActive = menu.sections.filter(ele => {
-          return ele.name === this.activeSubmenu;
-        });
-
-        if (submenuActive && submenuActive.length) {
-          this.submenuActive = submenuActive[0];
-          this.submenuSelectedName = submenuActive[0].name;
-        }
-
-        return subMenu[0];
-      }
-
-      return null;
-    },
-    */
-
-    /**
-     * Devuelve la url hacia un submenú.
-     */
-    /*
-    getSubmenuUrl(nameSubmenu: string) {
-      if (!nameSubmenu || !this.submenus || !this.submenus.length) {
-        return null;
-      }
-
-      const selectMenu = this.menus.filter(ele => {
-        return ele.name === this.menuSelectedName;
+      const selectMenu = menus.value.filter(ele => {
+        return ele.name === menuSelectedName.value;
       });
 
-      const selectSubMenu = this.submenus.filter(ele => {
+      const selectSubMenu = subMenus.value.filter(ele => {
         return ele.name === nameSubmenu;
-      });
+      });      
 
       if (selectMenu && selectMenu.length && selectMenu[0] && selectMenu[0].sections && 
           selectSubMenu && selectSubMenu.length && selectSubMenu[0]) {
@@ -478,12 +276,75 @@ export default defineComponent({
         }
 
         return url;
-        //return (selectMenu[0].url ?? '') + '/' + (selectSubMenu[0].url ?? '');
       }
-    },
+
+      return '/';
+    };
+
+    const generateLink = (slug: string, group?: string) => {
+      
+      let url = '';
+
+      if (group) {
+        url += '/' + group;
+      }
+
+      if (slug) {
+        url += '/' + slug;
+      }
+
+      return url;
+    };
+
+    const subMenuOpen = (name: string) => {
+      if (!name || !menus.value || !menus.value.length) {
+        return null;
+      }
+
+      menuSelectedName.value = name;
+      searchMenuActive();
+
+      // En caso de un menú simple
+      if (menuActive.value && menuActive.value.sections) {
+        isOpenRef.value = true;
+      }
+    };
+
+    onBeforeMount(() => {
+      // Busca y actualiza los menús desde la APi o Storage.
+      getMenus();
+      updateComponent();
+    });
+
+    // Cuando cambia la ruta actualiza el componente.
+    watch(useRoute(), () => {
+      updateComponent();
+    });
+
+    return { 
+      route,
+      router, 
+      params,
+      slug,
+      subsection: subsection,
+      isOpenRef, 
+      setOpen, 
+      event, 
+      caretDownOutline, 
+      closeCircleOutline,
+      menuSelectedName,
+      menus,
+      menuActive,
+      subMenuSelectedName,
+      subMenuActive,
+      subMenus,
+      subMenuOpen,
+      subMenuClose,
+      generateLink,
+      generateSubmenuLink,
+      navigateTo
+    }
   },
-  */
-  }
 });
 </script>
 
