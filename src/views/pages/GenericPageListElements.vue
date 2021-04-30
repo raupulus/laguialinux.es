@@ -58,6 +58,7 @@ export default({
     IonRow,
     IonPage,
   },
+  props: ['forceSlug', 'forceSubsection'],
   /*
   data() {
     return {
@@ -65,7 +66,8 @@ export default({
     }
   },
   */
-  setup() {
+  setup(props: any) {
+    console.log(props);
     const route = useRoute();
     const params = ref(route.params);
     //const slug = computed(() => params.value.slug);
@@ -73,14 +75,12 @@ export default({
     const subsection = ref();
 
     const updateData = () => {
-      slug.value = route.params.slug;
-      subsection.value = route.params.subsection;
+      slug.value = route.params.slug ?? props.forceSlug;
+      subsection.value = route.params.subsection ?? props.forceSubsection;
       //console.log('Nuevo Slug: ' + params.value.slug);
       //console.log('Nueva Subseccion: ' + params.value.subsection);
 
       // TODO → Preparar ajax para obtener datos.
-
-      return params;
     };
 
     onMounted(() => updateData());

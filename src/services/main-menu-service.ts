@@ -25,14 +25,14 @@ export class MainMenuService {
         id: 2,
         title: 'Noticias',
         name: 'posts',
-        group: 'section',
+        group: '',
         template: 'generic'
       },
       {
         id: 4,
         title: 'Vídeos',
         name: 'videos',
-        group: 'section',
+        group: '',
         template: 'generic',
         sections: [
           {
@@ -51,7 +51,7 @@ export class MainMenuService {
         id: 3,
         title: 'Guías',
         name: 'guides',
-        group: 'section',
+        group: '',
         template: 'generic',
         sections: [
           {
@@ -135,7 +135,7 @@ export class MainMenuService {
         id: 5,
         title: 'IOT',
         name: 'iot',
-        group: 'section',
+        group: '',
         template: 'generic',
         sections: [
           {
@@ -174,7 +174,7 @@ export class MainMenuService {
         id: 8,
         title: 'Hardware',
         name: 'hardware',
-        group: 'section',
+        group: '',
         template: 'generic',
         sections: [
           {
@@ -193,7 +193,7 @@ export class MainMenuService {
         id: 9,
         title: 'Aplicaciones',
         name: 'software',
-        group: 'section',
+        group: '',
         template: 'generic',
         sections: [
           {
@@ -232,7 +232,7 @@ export class MainMenuService {
         id: 26,
         title: 'Enlaces Amigos',
         name: 'links-friends',
-        group: 'section',
+        group: '',
         template: 'generic',
         sections: [
           {
@@ -281,7 +281,7 @@ export class MainMenuService {
         id: 17,
         title: 'Cursos',
         name: 'curses',
-        group: 'section',
+        group: '',
         template: 'generic',
         sections: [
           {
@@ -300,28 +300,28 @@ export class MainMenuService {
         id: 6,
         title: 'Apps',
         name: 'apps',
-        group: 'section',
+        group: '',
         template: 'generic'
       },
       {
         id: 7,
         title: 'Eventos',
         name: 'events',
-        group: 'section',
+        group: '',
         template: 'generic'
       },
       {
         id: 27,
         title: 'Contacto',
         name: 'contact',
-        group: 'section',
+        group: '',
         template: 'generic'
       },
       {
         id: 28,
         title: 'About',
         name: 'about',
-        group: 'section',
+        group: '',
         template: 'generic',
       }
     ];
